@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- EasyMix Official Emblem — 4 diamonds in 2×2 grid with cross gap -->
+  <!-- Top-left diamond (lighter green) -->
+  <polygon points="27,4 48,27 27,48 4,27" fill="#4CAF50"/>
+  <!-- Top-right diamond (darker green) -->
+  <polygon points="73,4 96,27 73,48 52,27" fill="#2E7D32"/>
+  <!-- Bottom-left diamond (darker green) -->
+  <polygon points="27,52 48,73 27,96 4,73" fill="#2E7D32"/>
+  <!-- Bottom-right diamond (darker green) -->
+  <polygon points="73,52 96,73 73,96 52,73" fill="#2E7D32"/>
+</svg>

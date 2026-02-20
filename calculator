@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EasyMix — Калькулятор расхода</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Raleway:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --g: #2ECC71;
+  --gd: #1a9c50;
+  --ga: #00ff88;
+  --bg: #0b0f0c;
+  --c1: #141a16;
+  --c2: #1d2620;
+  --c3: #263029;
+  --t1: #f0f7f2;
+  --t2: rgba(240,247,242,0.55);
+  --t3: rgba(240,247,242,0.25);
+  --warn: #e67e22;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Raleway',sans-serif; background:var(--bg); color:var(--t1); min-height:100vh; overflow-x:hidden; }
+
+header {
+  position:sticky; top:0; z-index:200;
+  background:rgba(11,15,12,0.96); backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(46,204,113,0.2);
+  padding:0 32px; height:60px;
+  display:flex; align-items:center; gap:14px;
+}
+.logo { font-family:'Bebas Neue'; font-size:1.7rem; letter-spacing:3px; }
+.logo em { color:var(--g); font-style:normal; }
+.hdot { width:6px; height:6px; background:var(--g); border-radius:50%; }
+.htag {
+  margin-left:auto; font-size:0.65rem; font-weight:700; letter-spacing:2.5px;
+  text-transform:uppercase; color:var(--g);
+  border:1px solid rgba(46,204,113,0.3); padding:4px 10px; border-radius:20px;
+}
+
+.hero {
+  padding:48px 32px 32px;
+  background:linear-gradient(160deg,#0d1f10 0%,var(--bg) 60%);
+  text-align:center; position:relative; overflow:hidden;
+}
+.hero::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse 800px 300px at 50% 0%,rgba(46,204,113,0.06),transparent);
+  pointer-events:none;
+}
+.hero h1 { font-family:'Bebas Neue'; font-size:clamp(2.8rem,7vw,5rem); letter-spacing:5px; line-height:1; margin-bottom:10px; }
+.hero h1 span { color:var(--g); }
+.hero p { color:var(--t2); font-size:0.9rem; font-weight:500; max-width:480px; margin:0 auto; }
+
+.nav-wrap { padding:24px 32px 0; max-width:1120px; margin:0 auto; }
+.nav-tabs {
+  display:grid; grid-template-columns:repeat(6,1fr); gap:6px;
+  background:var(--c1); border:1px solid rgba(46,204,113,0.12);
+  border-radius:14px; padding:6px;
+}
+.ntab {
+  background:transparent; border:none; border-radius:10px;
+  padding:12px 8px; cursor:pointer; text-align:center;
+  transition:all .2s; color:var(--t3); font-family:'Raleway',sans-serif;
+}
+.ntab:hover { color:var(--t2); background:rgba(46,204,113,0.05); }
+.ntab.active { background:linear-gradient(135deg,#1a4a2a,#0d2e1a); color:var(--t1); box-shadow:0 0 16px rgba(46,204,113,0.15); }
+.ntab-icon { font-size:1.4rem; display:block; margin-bottom:5px; }
+.ntab-name { font-family:'Bebas Neue'; font-size:0.85rem; letter-spacing:1.5px; display:block; }
+.ntab.active .ntab-name { color:var(--g); }
+
+.main {
+  max-width:1120px; margin:0 auto; padding:24px 32px 60px;
+  display:grid; grid-template-columns:1fr 360px; gap:20px; align-items:start;
+}
+
+.panel { background:var(--c1); border:1px solid rgba(46,204,113,0.12); border-radius:16px; padding:28px; display:none; }
+.panel.active { display:block; }
+
+.stitle {
+  font-family:'Bebas Neue'; font-size:1.1rem; letter-spacing:2px; color:var(--g);
+  margin-bottom:16px; display:flex; align-items:center; gap:10px;
+}
+.stitle::after { content:''; flex:1; height:1px; background:rgba(46,204,113,0.15); }
+
+.step { margin-bottom:22px; }
+.slbl { font-size:0.68rem; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--t2); margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+.sn { width:18px; height:18px; border-radius:50%; background:var(--g); color:var(--bg); font-size:0.6rem; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+
+.plist { display:flex; flex-direction:column; gap:5px; max-height:300px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--g) var(--c2); }
+.pitem { background:var(--c2); border:1.5px solid rgba(46,204,113,0.08); border-radius:10px; padding:11px 14px; cursor:pointer; transition:all .18s; display:flex; align-items:center; gap:11px; }
+.pitem:hover { border-color:rgba(46,204,113,0.3); }
+.pitem.sel { background:linear-gradient(135deg,#1a4a2a,#0d2e1a); border-color:var(--g); }
+.pdot { width:8px; height:36px; border-radius:3px; flex-shrink:0; }
+.pinfo { flex:1; min-width:0; }
+.pname { font-size:0.82rem; font-weight:700; }
+.pcat { font-size:0.67rem; color:var(--t2); margin-top:2px; }
+.pcons { font-size:0.67rem; color:var(--g); font-weight:700; text-align:right; white-space:nowrap; }
+
+.irow { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.irow3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+.ig { display:flex; flex-direction:column; gap:6px; }
+.ig label { font-size:0.67rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--t3); }
+.iw { position:relative; }
+input[type=number], select {
+  width:100%; background:var(--c2); border:1.5px solid rgba(46,204,113,0.15);
+  border-radius:10px; padding:11px 44px 11px 14px; color:var(--t1);
+  font-family:'Raleway',sans-serif; font-size:1rem; font-weight:700;
+  outline:none; transition:border-color .2s; -moz-appearance:textfield; appearance:textfield;
+}
+input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button { -webkit-appearance:none; }
+input[type=number]:focus, select:focus { border-color:var(--g); box-shadow:0 0 0 3px rgba(46,204,113,0.08); }
+select { padding-right:14px; cursor:pointer; }
+select option { background:var(--c2); }
+.iu { position:absolute; right:12px; top:50%; transform:translateY(-50%); font-size:0.7rem; font-weight:700; color:var(--g); }
+
+.range-wrap {}
+.range-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.range-val { font-family:'Bebas Neue'; font-size:1.6rem; color:var(--g); letter-spacing:2px; }
+.range-lim { font-size:0.65rem; color:var(--t3); font-weight:600; }
+input[type=range] { width:100%; height:4px; background:var(--c2); border-radius:4px; outline:none; -webkit-appearance:none; cursor:pointer; padding:0; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:20px; height:20px; background:var(--g); border-radius:50%; cursor:pointer; box-shadow:0 0 10px rgba(46,204,113,0.4); }
+
+.rpills { display:flex; flex-wrap:wrap; gap:6px; }
+.rpill { background:var(--c2); border:1.5px solid rgba(46,204,113,0.1); border-radius:8px; padding:8px 14px; cursor:pointer; font-size:0.78rem; font-weight:700; color:var(--t2); transition:all .18s; user-select:none; line-height:1.4; }
+.rpill:hover { border-color:rgba(46,204,113,0.3); color:var(--t1); }
+.rpill.sel { background:linear-gradient(135deg,#1a4a2a,#0d2e1a); border-color:var(--g); color:var(--t1); }
+
+.calc-btn { width:100%; padding:15px; background:var(--g); color:var(--bg); border:none; border-radius:12px; font-family:'Bebas Neue'; font-size:1.2rem; letter-spacing:3px; cursor:pointer; transition:all .2s; margin-top:6px; }
+.calc-btn:hover { background:var(--ga); transform:translateY(-2px); box-shadow:0 8px 24px rgba(46,204,113,0.25); }
+.calc-btn:active { transform:translateY(0); }
+
+.warn-box { background:rgba(230,126,34,0.08); border:1px solid rgba(230,126,34,0.3); border-radius:8px; padding:10px 14px; font-size:0.75rem; color:var(--warn); font-weight:600; margin-top:10px; display:none; }
+.warn-box.show { display:block; }
+
+.tip-box { background:rgba(46,204,113,0.05); border:1px solid rgba(46,204,113,0.15); border-radius:10px; padding:12px 14px; font-size:0.76rem; color:var(--t2); line-height:1.6; }
+.tip-box strong { color:var(--g); }
+
+.fn { background:rgba(46,204,113,0.04); border:1px solid rgba(46,204,113,0.1); border-radius:12px; padding:16px 20px; margin-top:14px; }
+.fn-t { font-family:'Bebas Neue'; font-size:0.9rem; letter-spacing:2px; color:var(--g); margin-bottom:8px; }
+.fn-r { display:flex; justify-content:space-between; font-size:0.73rem; color:var(--t2); padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+.fn-r:last-child { border:none; }
+.fn-r strong { color:var(--t1); font-weight:600; }
+
+.tile-per-one { background:rgba(46,204,113,0.05); border:1px solid rgba(46,204,113,0.15); border-radius:10px; padding:12px 14px; margin-top:12px; display:none; }
+.tpo-val { font-family:'Bebas Neue'; font-size:1.6rem; color:var(--g); letter-spacing:2px; }
+.tpo-lbl { font-size:0.67rem; color:var(--t2); font-weight:700; letter-spacing:1px; margin-bottom:4px; }
+
+.result-card { background:var(--c1); border:1px solid rgba(46,204,113,0.12); border-radius:16px; padding:28px; position:sticky; top:80px; }
+.r-empty { text-align:center; padding:40px 20px; color:var(--t3); }
+.r-empty-ico { font-size:2.8rem; margin-bottom:10px; }
+.r-empty p { font-size:0.82rem; }
+.r-result { display:none; }
+.r-result.show { display:block; }
+.r-pname { font-family:'Bebas Neue'; font-size:1.3rem; letter-spacing:2px; }
+.r-pcat { font-size:0.67rem; color:var(--g); font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:18px; margin-top:2px; }
+.r-big { background:linear-gradient(135deg,#0d2e1a,#1a4a2a); border:1px solid rgba(46,204,113,0.25); border-radius:14px; padding:22px; text-align:center; margin-bottom:14px; position:relative; overflow:hidden; }
+.r-big::before { content:''; position:absolute; width:100px; height:100px; background:radial-gradient(circle,rgba(46,204,113,0.15),transparent); top:-20px; right:-20px; border-radius:50%; }
+.r-big-num { font-family:'Bebas Neue'; font-size:4rem; line-height:1; color:var(--g); letter-spacing:4px; }
+.r-big-lbl { font-size:0.65rem; font-weight:700; color:var(--t2); letter-spacing:2px; text-transform:uppercase; margin-top:4px; }
+.sgrid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:14px; }
+.sbox { background:var(--c2); border-radius:10px; padding:12px; border:1px solid rgba(46,204,113,0.08); }
+.sbox.full { grid-column:1/-1; }
+.sv { font-family:'Bebas Neue'; font-size:1.4rem; letter-spacing:1px; }
+.sl { font-size:0.6rem; color:var(--t3); font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-top:2px; }
+.reset-btn { width:100%; padding:11px; background:transparent; color:var(--t3); border:1px solid rgba(255,255,255,0.08); border-radius:10px; font-family:'Raleway'; font-size:0.75rem; font-weight:700; cursor:pointer; transition:all .18s; letter-spacing:1px; text-transform:uppercase; margin-top:12px; }
+.reset-btn:hover { border-color:rgba(255,255,255,0.2); color:var(--t2); }
+
+.hidden { display:none!important; }
+
+@media(max-width:900px){.main{grid-template-columns:1fr;}.result-card{position:static;}.nav-tabs{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:600px){.main,.nav-wrap{padding-left:16px;padding-right:16px;}.irow,.irow3{grid-template-columns:1fr;}.hero{padding:32px 16px 24px;}.nav-wrap{padding-top:16px;}}
+</style>
+</head>
+<body>
+
+<header>
+  <span class="logo">EASY<em>MIX</em></span>
+  <div class="hdot"></div>
+  <span class="htag">Калькулятор расхода</span>
+</header>
+
+<div class="hero">
+  <h1>РАССЧИТАЙ <span>ТОЧНО</span></h1>
+  <p>Выберите раздел, укажите параметры — получите точное количество мешков с учётом запаса</p>
+</div>
+
+<div class="nav-wrap">
+  <div class="nav-tabs">
+    <button class="ntab active" data-tab="wall"><span class="ntab-icon">🧱</span><span class="ntab-name">СТЕНА</span></button>
+    <button class="ntab" data-tab="tile"><span class="ntab-icon">⬜</span><span class="ntab-name">ПЛИТКА</span></button>
+    <button class="ntab" data-tab="floor"><span class="ntab-icon">⬛</span><span class="ntab-name">ПОЛЫ</span></button>
+    <button class="ntab" data-tab="topping"><span class="ntab-icon">🏭</span><span class="ntab-name">ТОППИНГ</span></button>
+    <button class="ntab" data-tab="industrial"><span class="ntab-icon">⚙️</span><span class="ntab-name">ПРОМ.</span></button>
+    <button class="ntab" data-tab="ceiling"><span class="ntab-icon">🔲</span><span class="ntab-name">ПОТОЛОК</span></button>
+  </div>
+</div>
+
+<div class="main">
+<div>
+
+<!-- СТЕНА -->
+<div class="panel active" id="panel-wall">
+  <div class="stitle">Стена — штукатурки и шпаклёвки</div>
+  <div class="step">
+    <div class="slbl"><span class="sn">1</span>Выберите смесь</div>
+    <div class="plist" id="pl-wall"></div>
+  </div>
+  <div class="step">
+    <div class="slbl"><span class="sn">2</span>Площадь и слои</div>
+    <div class="irow">
+      <div class="ig"><label>Площадь</label><div class="iw"><input type="number" id="w-area" placeholder="0" min="1" max="5000"><span class="iu">м²</span></div></div>
+      <div class="ig"><label>Слоёв</label><div class="iw"><input type="number" id="w-layers" value="1" min="1" max="5"><span class="iu">шт</span></div></div>
+    </div>
+  </div>
+  <div class="step" id="w-thk-step" style="display:none">
+    <div class="slbl"><span class="sn">3</span>Толщина слоя</div>
+    <div class="range-top"><span class="range-lim" id="w-thk-lim">—</span><span class="range-val" id="w-thk-val">— мм</span></div>
+    <input type="range" id="w-thk" min="1" max="50" value="10">
+  </div>
+  <div class="step">
+    <div class="slbl"><span class="sn" style="background:rgba(46,204,113,0.3);color:var(--g)">%</span>Запас</div>
+    <div class="ig"><label>Запас на отходы</label><div class="iw"><input type="number" id="w-res" value="10" min="0" max="50"><span class="iu">%</span></div></div>
+  </div>
+  <div class="warn-box" id="w-warn"></div>
+  <button class="calc-btn" onclick="calc('wall')">⚡ РАССЧИТАТЬ</button>
+  <div class="fn"><div class="fn-t">Формула</div>
+    <div class="fn-r"><span>кг = площадь × расход/мм × толщина × слои</span></div>
+    <div class="fn-r"><span>мешки</span><strong>ceil(кг ÷ вес) × (1 + запас%)</strong></div>
+  </div>
+</div>
+
+<!-- ПЛИТКА -->
+<div class="panel" id="panel-tile">
+  <div class="stitle">Плитка — расход клея</div>
+  <div class="step">
+    <div class="slbl"><span class="sn">1</span>Выберите клей</div>
+    <div class="plist" id="pl-tile"></div>
+  </div>
+  <div class="step">
+    <div class="slbl"><span class="sn">2</span>Площадь и поверхность</div>
+    <div class="irow">
+      <div class="ig"><label>Площадь</label><div class="iw"><input type="number" id="t-area" placeholder="0" min="1"><span class="iu">м²</span></div></div>
+      <div class="ig"><label>Поверхность</label><div class="iw" style="padding-right:0"><select id="t-surf" style="padding-right:12px"><option value="0">Стена</option><option value="0.5">Пол (+0.5 кг/м²)</option></select></div></div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="slbl"><span class="sn">3</span>Размер гребёнки</div>
+    <div class="rpills" id="comb-pills">
+      <div class="rpill sel" data-v="6">Гребёнка 6 мм</div>
+      <div class="rpill" data-v="8">Гребёнка 8 мм</div>
+      <div class="rpill" data-v="10">Гребёнка 10 мм</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="slbl"><span class="sn">4</span>Размер плитки (расход на 1 шт)</div>
+    <div class="irow3">
+      <div class="ig"><label>Ширина</label><div class="iw"><input type="number" id="t-w" placeholder="60" min="1"><span class="iu">см</span></div></div>
+      <div class="ig"><label>Высота</label><div class="iw"><input type="number" id="t-h" placeholder="60" min="1"><span class="iu">см</span></div></div>
+      <div class="ig"><label>Запас (подрезка)</label><div class="iw"><input type="number" id="t-res" value="15" min="0" max="40"><span class="iu">%</span></div></div>
+    </div>
+    <div class="tile-per-one" id="tpo">
+      <div class="tpo-lbl">РАСХОД НА 1 ПЛИТКУ</div>
+      <div class="tpo-val" id="tpo-val">—</div>
+    </div>
+  </div>
+  <div class="warn-box" id="t-warn"></div>
+  <button class="calc-btn" onclick="calc('tile')">⚡ РАССЧИТАТЬ</button>
+  <div class="fn"><div class="fn-t">Формула</div>
+    <div class="fn-r"><span>на 1 шт</span><strong>(ш×в÷10000) × расход</strong></div>
+    <div class="fn-r"><span>итого</span><strong>площадь × расход × (1 + запас%)</strong></div>
+  </div>
+</div>
+
+<!-- ПОЛЫ -->
+<div class="panel" id="panel-floor">
+  <div class="stitle">Полы — стяжки и наливные полы</div>
+  <div class="step">
+    <div class="slbl"><span class="sn">1</span>Выберите смесь</div>
+    <div class="plist" id="pl-floor"></div>
+  </div>
+  <div class="step">
+    <div class="slbl"><span class="sn">2</span>Площадь и запас</div>
+    <div class="irow">
+      <div class="ig"><label>Площадь</label><div class="iw"><input type="number" id="f-area" placeholder="0" min="1"><span class="iu">м²</span></div></div>
+      <div class="ig"><label>Запас</label><div class="iw"><input type="number" id="f-res" value="10" min="0" max="50"><span class="iu">%</span></div></div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="slbl"><span class="sn">3</span>Толщина слоя</div>
+    <div class="range-top"><span class="range-lim" id="f-thk-lim">Выберите смесь</span><span class="range-val" id="f-thk-val">10 мм</span></div>
+    <input type="range" id="f-thk" min="2" max="40" value="10">
+  </div>
+  <div class="warn-box" id="f-warn"></div>
+  <button class="calc-btn" onclick="calc('floor')">⚡ РАССЧИТАТЬ</button>
+  <div class="fn"><div class="fn-t">Формула</div>
+    <div class="fn-r"><span>кг</span><strong>площадь × расход/мм × толщина</strong></div>
+    <div class="fn-r"><span>мешки</span><strong>ceil(кг ÷ вес) × (1 + запас%)</strong></div>
+  </div>
+</div>
+
+<!-- ТОППИНГ -->
+<div class="panel" id="panel-topping">
+  <div class="stitle">Топпинг — упрочнение бетонного пола</div>
+  <div class="step">
+    <div class="slbl"><span class="sn">1</span>Площадь бетонного пола</div>
+    <div class="ig"><label>Площадь</label><div class="iw"><input type="number" id="tp-area" placeholder="0" min="1"><span class="iu">м²</span></div></div>
+  </div>
+  <div class="step">
+    <div class="slbl"><span class="sn">2</span>Тип нагрузки</div>
+    <div class="rpills" id="load-pills">
+      <div class="rpill sel" data-v="3">Лёгкая<br><small style="opacity:0.6;font-weight:400">до 200 кг/см² — 3 кг/м²</small></div>
+      <div class="rpill" data-v="5">Средняя<br><small style="opacity:0.6;font-weight:400">склады, цеха — 5 кг/м²</small></div>
+      <div class="rpill" data-v="7">Тяжёлая<br><small style="opacity:0.6;font-weight:400">промышленность — 7 кг/м²</small></div>
+    </div>
+  </div>
+  <div class="tip-box" style="margin-bottom:14px">💡 Топпинг наносится в <strong>2 этапа</strong>: первая половина нормы втирается, затем вторая. Прочность PerfectTop PL4 <strong>≥60 МПа</strong>. Запас не нужен — расход точный.</div>
+  <button class="calc-btn" onclick="calc('topping')">⚡ РАССЧИТАТЬ</button>
+  <div class="fn"><div class="fn-t">PerfectTop PL4 — 25 кг</div>
+    <div class="fn-r"><span>Лёгкая нагрузка</span><strong>3 кг/м²</strong></div>
+    <div class="fn-r"><span>Средняя нагрузка</span><strong>5 кг/м²</strong></div>
+    <div class="fn-r"><span>Тяжёлая нагрузка</span><strong>7 кг/м²</strong></div>
+    <div class="fn-r"><span>мешки</span><strong>ceil(площадь × доза ÷ 25)</strong></div>
+  </div>
+</div>
+
+<!-- ПРОМЫШЛЕННЫЕ -->
+<div class="panel" id="panel-industrial">
+  <div class="stitle">Промышленные смеси</div>
+  <div class="step">
+    <div class="slbl"><span class="sn">1</span>Тип смеси</div>
+    <div class="rpills" id="ind-pills">
+      <div class="rpill sel" data-v="cc1">Shotcrete Pro CC1<br><small style="opacity:0.6;font-weight:400">Торкрет-бетон</small></div>
+      <div class="rpill" data-v="nano">NanoCem UT-9<br><small style="opacity:0.6;font-weight:400">Тампонажная смесь</small></div>
+    </div>
+  </div>
+
+  <div id="cc1-block">
+    <div class="step">
+      <div class="slbl"><span class="sn">2</span>Площадь и запас</div>
+      <div class="irow">
+        <div class="ig"><label>Площадь</label><div class="iw"><input type="number" id="cc-area" placeholder="0" min="1"><span class="iu">м²</span></div></div>
+        <div class="ig"><label>Запас</label><div class="iw"><input type="number" id="cc-res" value="15" min="0" max="50"><span class="iu">%</span></div></div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="slbl"><span class="sn">3</span>Толщина слоя (10–120 мм)</div>
+      <div class="range-top"><span class="range-lim">диапазон: 10–120 мм</span><span class="range-val" id="cc-thk-val">30 мм</span></div>
+      <input type="range" id="cc-thk" min="10" max="120" value="30">
+    </div>
+    <div class="fn"><div class="fn-t">Shotcrete Pro CC1</div>
+      <div class="fn-r"><span>Расход</span><strong>20.5 кг/м² при 10 мм</strong></div>
+      <div class="fn-r"><span>Прочность на сжатие</span><strong>≥45 МПа (28 суток)</strong></div>
+      <div class="fn-r"><span>Толщина слоя</span><strong>10–120 мм</strong></div>
+    </div>
+  </div>
+
+  <div id="nano-block" style="display:none">
+    <div class="step">
+      <div class="slbl"><span class="sn">2</span>Параметры скважины</div>
+      <div class="irow">
+        <div class="ig"><label>Диаметр скважины</label><div class="iw"><input type="number" id="na-d" placeholder="200" min="50"><span class="iu">мм</span></div></div>
+        <div class="ig"><label>Длина интервала</label><div class="iw"><input type="number" id="na-l" placeholder="100" min="1"><span class="iu">м</span></div></div>
+      </div>
+      <div class="ig" style="margin-top:12px"><label>Запас</label><div class="iw"><input type="number" id="na-res" value="20" min="0" max="50"><span class="iu">%</span></div></div>
+    </div>
+    <div class="tip-box" style="margin-bottom:14px">⚠️ <strong>NanoCem UT-9</strong> — тампонажная смесь для цементирования нефтяных и газовых скважин. Успешные полевые испытания 2026 г. По техническим вопросам — специалисты EasyMix.</div>
+    <div class="fn"><div class="fn-t">NanoCem UT-9</div>
+      <div class="fn-r"><span>Объём (л)</span><strong>π × (d/2)² × длина × 1000</strong></div>
+      <div class="fn-r"><span>кг</span><strong>объём × 1.9 кг/л</strong></div>
+      <div class="fn-r"><span>мешки</span><strong>ceil(кг ÷ 25) × (1 + запас%)</strong></div>
+    </div>
+  </div>
+
+  <button class="calc-btn" onclick="calc('industrial')" style="margin-top:14px">⚡ РАССЧИТАТЬ</button>
+</div>
+
+<!-- ПОТОЛОК -->
+<div class="panel" id="panel-ceiling">
+  <div class="stitle">Потолок — шпаклёвки</div>
+  <div class="step">
+    <div class="slbl"><span class="sn">1</span>Выберите шпаклёвку</div>
+    <div class="plist" id="pl-ceiling"></div>
+  </div>
+  <div class="step">
+    <div class="slbl"><span class="sn">2</span>Площадь и слои</div>
+    <div class="irow">
+      <div class="ig"><label>Площадь потолка</label><div class="iw"><input type="number" id="c-area" placeholder="0" min="1"><span class="iu">м²</span></div></div>
+      <div class="ig"><label>Слоёв (реком. 2)</label><div class="iw"><input type="number" id="c-layers" value="2" min="1" max="4"><span class="iu">шт</span></div></div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="slbl"><span class="sn">3</span>Толщина слоя</div>
+    <div class="range-top"><span class="range-lim" id="c-thk-lim">диапазон: 0.5–3 мм</span><span class="range-val" id="c-thk-val">1 мм</span></div>
+    <input type="range" id="c-thk" min="0.5" max="3" value="1" step="0.5">
+    <div class="tip-box" style="margin-top:12px">💡 На потолке рекомендуется <strong>2 слоя по 1 мм</strong> — предотвращает оплывание. Шлифовка через 24 часа при +20°С.</div>
+  </div>
+  <div class="step">
+    <div class="slbl"><span class="sn" style="background:rgba(46,204,113,0.3);color:var(--g)">%</span>Запас</div>
+    <div class="ig"><label>Запас на отходы</label><div class="iw"><input type="number" id="c-res" value="10" min="0" max="50"><span class="iu">%</span></div></div>
+  </div>
+  <button class="calc-btn" onclick="calc('ceiling')">⚡ РАССЧИТАТЬ</button>
+</div>
+
+</div><!-- end left -->
+
+<!-- RESULT -->
+<div class="result-card">
+  <div class="stitle">РЕЗУЛЬТАТ</div>
+  <div class="r-empty" id="r-empty">
+    <div class="r-empty-ico">📐</div>
+    <p>Выберите раздел, заполните параметры и нажмите «Рассчитать»</p>
+  </div>
+  <div class="r-result" id="r-result">
+    <div class="r-pname" id="r-pname">—</div>
+    <div class="r-pcat" id="r-pcat">—</div>
+    <div class="r-big">
+      <div class="r-big-num" id="r-bags">0</div>
+      <div class="r-big-lbl">мешков к заказу</div>
+    </div>
+    <div class="sgrid">
+      <div class="sbox"><div class="sv" id="r-kg">0 кг</div><div class="sl">Общий расход</div></div>
+      <div class="sbox"><div class="sv" id="r-bw">25 кг</div><div class="sl">Вес мешка</div></div>
+      <div class="sbox"><div class="sv" id="r-base">0 шт</div><div class="sl">Расчётных мешков</div></div>
+      <div class="sbox"><div class="sv" id="r-rsv">+0 шт</div><div class="sl">Мешков в запас</div></div>
+      <div class="sbox full"><div class="sv" id="r-area">—</div><div class="sl">Параметры расчёта</div></div>
+    </div>
+    <div class="tip-box" id="r-tip">—</div>
+    <button class="reset-btn" onclick="reset()">↺ Сбросить расчёт</button>
+  </div>
+</div>
+
+</div><!-- end main -->
+
+<script>
+const D = {
+  wall:[
+    {id:'bc1', name:'Basecoat BC1',        cat:'Гипсовая штукатурка',         col:'#95a5a6',byT:true, c:1.4,bw:30,mn:2, mx:50, tip:'Гипсовая штукатурка для стен. Ручной или машинный способ. При слое >30 мм наносить в два прохода.'},
+    {id:'pp1', name:'PerlitePlaster PP1',  cat:'Перлитовая штукатурка',       col:'#bdc3c7',byT:true, c:1.4,bw:30,mn:2, mx:70, tip:'Лёгкая штукатурка с перлитом. Теплоизоляционные свойства. Машинное нанесение. Слой до 70 мм.'},
+    {id:'dp1', name:'DecoPlaster DP1',     cat:'Декоративная штукатурка',     col:'#e67e22',byT:false,c:2.5,bw:25,mn:null,mx:null,tip:'Декоративная фасадная штукатурка. Тонкий слой 1–5 мм. Колеруется в любой цвет.'},
+    {id:'2in1',name:'2in1 Putty+Plaster',  cat:'Штукатурка + шпаклёвка 2в1', col:'#27ae60',byT:true, c:1.3,bw:25,mn:1, mx:15, tip:'Универсальная 2в1 — заменяет два продукта. Экономит время. Только для внутренних работ.'},
+    {id:'ft1', name:'FinalTouch FT1',      cat:'Финишная шпаклёвка',          col:'#d5dbdb',byT:true, c:1.2,bw:25,mn:0.5,mx:2,  tip:'Финишная шпаклёвка под окраску и обои. Легко шлифуется. Не применять в мокрых зонах.'},
+    {id:'ft2', name:'PolymerWhiteCoat FT2',cat:'Полимерная шпаклёвка',        col:'#f8f9fa',byT:true, c:1.1,bw:25,mn:0.5,mx:2,  tip:'Белоснежная полимерная шпаклёвка. Идеальна для стен под интерьерную краску.'},
+    {id:'sc1', name:'Skimcoat SC1',        cat:'Выравнивающая шпаклёвка',     col:'#b2bec3',byT:true, c:1.4,bw:25,mn:1, mx:3,  tip:'Цементная шпаклёвка. Водостойкая. Подходит для ванных, кухонь и влажных помещений.'},
+  ],
+  tile:[
+    {id:'tt2',name:'TileStandard TT2',   cat:'Стандартный клей',      col:'#f39c12',bw:25,c:{6:3.5,8:4.0,10:4.5},tip:'Стандартный клей для керамики и керамогранита. Оптимальное соотношение цена/качество.'},
+    {id:'tt1',name:'TileAdhesive TT1',   cat:'Усиленный клей C2',     col:'#e67e22',bw:25,c:{6:4.0,8:4.5,10:5.0},tip:'Усиленный клей C2 для тяжёлой плитки, крупного керамогранита и натурального камня.'},
+    {id:'tt4',name:'Tile2Tile TT4',      cat:'Клей плитка-на-плитку', col:'#d35400',bw:25,c:{6:3.0,8:3.5,10:4.0},tip:'Для реновации — новая плитка прямо на старую без демонтажа. Экономит время и деньги.'},
+  ],
+  floor:[
+    {id:'pl1',name:'PerfectLevel PL1', cat:'Самовыравнивающийся пол',col:'#3498db',byT:true,c:1.8,bw:25,mn:2, mx:10, tip:'Самовыравнивающийся пол. Растекается сам. Готов к укладке покрытия через 24 часа.'},
+    {id:'pl2',name:'PerfectLevel PL2', cat:'Финишный выравниватель', col:'#2980b9',byT:true,c:1.8,bw:20,mn:5, mx:20, tip:'Гипсовый наливной пол. Финишный слой 5–20 мм. Первичное высыхание 6–10 часов.'},
+    {id:'pl3',name:'FibroScreed PL3',  cat:'Армированная стяжка',   col:'#1a6ba6',byT:true,c:2.0,bw:25,mn:10,mx:40, tip:'Фиброармированная стяжка для высоких нагрузок. Гаражи, склады, промышленные объекты.'},
+  ],
+  ceiling:[
+    {id:'ft1c',name:'FinalTouch FT1',       cat:'Финишная шпаклёвка',   col:'#d5dbdb',byT:true,c:1.2,bw:25,mn:0.5,mx:3, tip:'Финишная шпаклёвка на потолок. 2 слоя по 1 мм лучше, чем один толстый. Шлифовка через 24 ч.'},
+    {id:'ft2c',name:'PolymerWhiteCoat FT2', cat:'Полимерная шпаклёвка', col:'#f8f9fa',byT:true,c:1.1,bw:25,mn:0.5,mx:2, tip:'Белоснежная полимерная шпаклёвка. Идеальна для потолков под интерьерную краску.'},
+  ],
+};
+
+let S={wall:null,tile:null,floor:null,ceiling:null};
+let comb=6, load=3, ind='cc1';
+
+function init(){
+  ['wall','tile','floor','ceiling'].forEach(sec=>renderList(sec));
+  // tabs
+  document.querySelectorAll('.ntab').forEach(b=>{
+    b.onclick=()=>{
+      document.querySelectorAll('.ntab').forEach(x=>x.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      document.getElementById('panel-'+b.dataset.tab).classList.add('active');
+    };
+  });
+  // ranges
+  const rv=(id,vid,u)=>{const r=document.getElementById(id);if(r)r.oninput=()=>{document.getElementById(vid).textContent=r.value+u;updateTpo();}};
+  rv('w-thk','w-thk-val',' мм'); rv('f-thk','f-thk-val',' мм');
+  rv('cc-thk','cc-thk-val',' мм'); rv('c-thk','c-thk-val',' мм');
+  // comb pills
+  document.getElementById('comb-pills').onclick=e=>{
+    const p=e.target.closest('.rpill');if(!p)return;
+    document.querySelectorAll('#comb-pills .rpill').forEach(x=>x.classList.remove('sel'));
+    p.classList.add('sel');comb=parseInt(p.dataset.v);renderList('tile');updateTpo();
+  };
+  // load pills
+  document.getElementById('load-pills').onclick=e=>{
+    const p=e.target.closest('.rpill');if(!p)return;
+    document.querySelectorAll('#load-pills .rpill').forEach(x=>x.classList.remove('sel'));
+    p.classList.add('sel');load=parseFloat(p.dataset.v);
+  };
+  // ind pills
+  document.getElementById('ind-pills').onclick=e=>{
+    const p=e.target.closest('.rpill');if(!p)return;
+    document.querySelectorAll('#ind-pills .rpill').forEach(x=>x.classList.remove('sel'));
+    p.classList.add('sel');ind=p.dataset.v;
+    document.getElementById('cc1-block').style.display=ind==='cc1'?'':'none';
+    document.getElementById('nano-block').style.display=ind==='nano'?'':'none';
+  };
+  // tile size
+  ['t-w','t-h'].forEach(id=>{const el=document.getElementById(id);if(el)el.oninput=updateTpo;});
+}
+
+function renderList(sec){
+  const el=document.getElementById('pl-'+sec);
+  if(!el)return;el.innerHTML='';
+  D[sec].forEach(p=>{
+    const d=document.createElement('div');d.className='pitem';d.dataset.id=p.id;
+    const cs=p.byT===undefined?p.c[comb]+' кг/м²':p.byT?p.c+' кг/м²·мм':p.c+' кг/м²';
+    d.innerHTML=`<div class="pdot" style="background:${p.col}"></div><div class="pinfo"><div class="pname">${p.name}</div><div class="pcat">${p.cat}</div></div><div class="pcons">${cs}</div>`;
+    d.onclick=()=>selProd(sec,p.id);
+    el.appendChild(d);
+  });
+}
+
+function selProd(sec,id){
+  S[sec]=id;
+  document.querySelectorAll(`#pl-${sec} .pitem`).forEach(el=>el.classList.toggle('sel',el.dataset.id===id));
+  if(sec==='wall')updWall();
+  if(sec==='floor')updFloor();
+  if(sec==='ceiling')updCeil();
+  updateTpo();
+}
+
+function updWall(){
+  const p=D.wall.find(x=>x.id===S.wall);
+  const st=document.getElementById('w-thk-step');
+  if(!p||!p.byT){st.style.display='none';return;}
+  st.style.display='';
+  const r=document.getElementById('w-thk');
+  r.min=p.mn;r.max=p.mx;
+  const mid=Math.round((p.mn+p.mx)/2);r.value=mid;
+  document.getElementById('w-thk-val').textContent=mid+' мм';
+  document.getElementById('w-thk-lim').textContent=`диапазон: ${p.mn}–${p.mx} мм`;
+}
+function updFloor(){
+  const p=D.floor.find(x=>x.id===S.floor);if(!p)return;
+  const r=document.getElementById('f-thk');
+  r.min=p.mn;r.max=p.mx;
+  const mid=Math.round((p.mn+p.mx)/2);r.value=mid;
+  document.getElementById('f-thk-val').textContent=mid+' мм';
+  document.getElementById('f-thk-lim').textContent=`диапазон: ${p.mn}–${p.mx} мм`;
+}
+function updCeil(){
+  const p=D.ceiling.find(x=>x.id===S.ceiling);if(!p)return;
+  const r=document.getElementById('c-thk');
+  r.min=p.mn;r.max=p.mx;r.value=p.mn;
+  document.getElementById('c-thk-val').textContent=p.mn+' мм';
+  document.getElementById('c-thk-lim').textContent=`диапазон: ${p.mn}–${p.mx} мм`;
+}
+function updateTpo(){
+  const tw=parseFloat(document.getElementById('t-w').value);
+  const th=parseFloat(document.getElementById('t-h').value);
+  const tpo=document.getElementById('tpo');
+  const p=D.tile.find(x=>x.id===S.tile);
+  if(!tw||!th||!p){tpo.style.display='none';return;}
+  const a1=(tw*th)/10000;
+  const kg1=(a1*p.c[comb]).toFixed(3);
+  tpo.style.display='';
+  document.getElementById('tpo-val').textContent=`${kg1} кг на плитку ${tw}×${th} см`;
+}
+
+function warn(id,msg){
+  const el=document.getElementById(id);
+  if(!el)return;el.textContent=msg;el.classList.toggle('show',!!msg);
+}
+
+function calc(sec){
+  if(sec==='wall'){
+    warn('w-warn','');
+    if(!S.wall){warn('w-warn','⚠️ Выберите смесь из списка');return;}
+    const p=D.wall.find(x=>x.id===S.wall);
+    const area=parseFloat(document.getElementById('w-area').value);
+    const layers=parseFloat(document.getElementById('w-layers').value)||1;
+    const res=parseFloat(document.getElementById('w-res').value)/100||0;
+    if(!area){warn('w-warn','⚠️ Введите площадь');return;}
+    let kg;
+    if(p.byT){
+      const t=parseFloat(document.getElementById('w-thk').value);
+      if(t<p.mn||t>p.mx){warn('w-warn',`⚠️ Допустимая толщина: ${p.mn}–${p.mx} мм`);return;}
+      kg=area*p.c*t*layers;
+    }else{kg=area*p.c*layers;}
+    show(p.name,p.cat,kg,p.bw,res,`${area} м² × ${layers} сл.`,p.tip);
+  }
+  else if(sec==='tile'){
+    warn('t-warn','');
+    if(!S.tile){warn('t-warn','⚠️ Выберите клей из списка');return;}
+    const p=D.tile.find(x=>x.id===S.tile);
+    const area=parseFloat(document.getElementById('t-area').value);
+    const surf=parseFloat(document.getElementById('t-surf').value);
+    const res=parseFloat(document.getElementById('t-res').value)/100||0.15;
+    if(!area){warn('t-warn','⚠️ Введите площадь');return;}
+    const cr=p.c[comb]+surf;
+    const kgBase=area*cr;
+    const kgRes=area*res*cr;
+    const kgTotal=kgBase+kgRes;
+    const base=Math.ceil(kgBase/p.bw);
+    const total=Math.ceil(kgTotal/p.bw);
+    showFull(p.name,p.cat,kgTotal,p.bw,base,total-base,total,`${area} м², гребёнка ${comb} мм, запас ${Math.round(res*100)}%`,p.tip);
+  }
+  else if(sec==='floor'){
+    warn('f-warn','');
+    if(!S.floor){warn('f-warn','⚠️ Выберите смесь');return;}
+    const p=D.floor.find(x=>x.id===S.floor);
+    const area=parseFloat(document.getElementById('f-area').value);
+    const t=parseFloat(document.getElementById('f-thk').value);
+    const res=parseFloat(document.getElementById('f-res').value)/100||0;
+    if(!area){warn('f-warn','⚠️ Введите площадь');return;}
+    if(t<p.mn||t>p.mx){warn('f-warn',`⚠️ Допустимая толщина: ${p.mn}–${p.mx} мм`);return;}
+    const kg=area*p.c*t;
+    show(p.name,p.cat,kg,p.bw,res,`${area} м², ${t} мм`,p.tip);
+  }
+  else if(sec==='topping'){
+    const area=parseFloat(document.getElementById('tp-area').value);
+    if(!area){alert('Введите площадь');return;}
+    const kg=area*load;
+    const bags=Math.ceil(kg/25);
+    showFull('PerfectTop PL4','Топпинг для бетонных полов',kg,25,bags,0,bags,
+      `${area} м², нагрузка ${load===3?'лёгкая':load===5?'средняя':'тяжёлая'} (${load} кг/м²)`,
+      'Топпинг наносится в 2 этапа по половине нормы. Втирается в свежий бетон дисковой машиной. Прочность ≥60 МПа.');
+  }
+  else if(sec==='industrial'){
+    if(ind==='cc1'){
+      const area=parseFloat(document.getElementById('cc-area').value);
+      const t=parseFloat(document.getElementById('cc-thk').value);
+      const res=parseFloat(document.getElementById('cc-res').value)/100||0.15;
+      if(!area){alert('Введите площадь');return;}
+      const kg=area*(20.5/10)*t;
+      show('Shotcrete Pro CC1','Торкрет-бетон промышленный',kg,25,res,`${area} м², ${t} мм`,
+        'Торкрет-бетон для промышленных объектов. Прочность ≥45 МПа (28 суток). Слой 10–120 мм. Клиент — ArcelorMittal.');
+    }else{
+      const d=parseFloat(document.getElementById('na-d').value);
+      const l=parseFloat(document.getElementById('na-l').value);
+      const res=parseFloat(document.getElementById('na-res').value)/100||0.2;
+      if(!d||!l){alert('Введите диаметр и длину скважины');return;}
+      const vol=Math.PI*(d/1000/2)**2*l*1000;
+      const kg=vol*1.9;
+      show('NanoCem UT-9','Тампонажная смесь',kg,25,res,`Ø${d} мм × ${l} м (~${Math.round(vol)} л)`,
+        'NanoCem UT-9 — тампонажная смесь для цементирования скважин. Успешные полевые испытания 2026 г.');
+    }
+  }
+  else if(sec==='ceiling'){
+    if(!S.ceiling){alert('Выберите шпаклёвку');return;}
+    const p=D.ceiling.find(x=>x.id===S.ceiling);
+    const area=parseFloat(document.getElementById('c-area').value);
+    const layers=parseFloat(document.getElementById('c-layers').value)||2;
+    const t=parseFloat(document.getElementById('c-thk').value);
+    const res=parseFloat(document.getElementById('c-res').value)/100||0.1;
+    if(!area){alert('Введите площадь');return;}
+    if(t<p.mn||t>p.mx){alert(`Допустимая толщина: ${p.mn}–${p.mx} мм`);return;}
+    const kg=area*p.c*t*layers;
+    show(p.name,p.cat,kg,p.bw,res,`${area} м², ${layers} сл. × ${t} мм`,p.tip);
+  }
+}
+
+function show(name,cat,kg,bw,res,areaStr,tip){
+  const base=Math.ceil(kg/bw);
+  const total=Math.ceil(base*(1+res));
+  showFull(name,cat,kg,bw,base,total-base,total,areaStr,tip);
+}
+
+function showFull(name,cat,kg,bw,base,rsv,total,areaStr,tip){
+  document.getElementById('r-empty').style.display='none';
+  document.getElementById('r-result').classList.add('show');
+  document.getElementById('r-pname').textContent=name;
+  document.getElementById('r-pcat').textContent=cat;
+  document.getElementById('r-kg').textContent=Math.round(kg)+' кг';
+  document.getElementById('r-bw').textContent=bw+' кг';
+  document.getElementById('r-base').textContent=base+' шт';
+  document.getElementById('r-rsv').textContent='+'+rsv+' шт';
+  document.getElementById('r-area').textContent=areaStr;
+  document.getElementById('r-tip').innerHTML='<strong>💡 Совет:</strong> '+tip;
+  anim('r-bags',total);
+  if(window.innerWidth<900) document.querySelector('.result-card').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function anim(id,n){
+  const el=document.getElementById(id);let c=0;
+  const s=Math.max(1,Math.ceil(n/25));
+  const iv=setInterval(()=>{c=Math.min(c+s,n);el.textContent=c;if(c>=n)clearInterval(iv);},35);
+}
+
+function reset(){
+  document.getElementById('r-empty').style.display='block';
+  document.getElementById('r-result').classList.remove('show');
+  S={wall:null,tile:null,floor:null,ceiling:null};
+  ['wall','tile','floor','ceiling'].forEach(s=>document.querySelectorAll(`#pl-${s} .pitem`).forEach(el=>el.classList.remove('sel')));
+}
+
+init();
+</script>
+</body>
+</html>

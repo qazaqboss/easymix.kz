@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="EasyMix — казахстанский производитель сухих строительных смесей. Плиточные клеи, штукатурки, шпаклёвки, наливные полы. Более 3 000 000 мешков произведено.">
+  <meta name="keywords"
+    content="EasyMix, сухие строительные смеси, Казахстан, плиточный клей, штукатурка, шпаклёвка, наливной пол">
+  <title>EasyMix — Сухие строительные смеси | Казахстан</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/svg+xml" href="images/easymix-emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <img src="images/easymix-emblem.svg" alt="EasyMix" class="logo-icon">
+        <span class="logo-text">EASYMIX</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#hero" class="nav-link active">Главная</a></li>
+        <li><a href="#categories" class="nav-link">Продукция</a></li>
+        <li><a href="#about" class="nav-link">О компании</a></li>
+        <li><a href="#contacts" class="nav-link">Контакты</a></li>
+      </ul>
+      <div class="nav-social">
+        <a href="https://www.instagram.com/easymix.kz?igsh=MXI5d21iNThnaGlpdg==" target="_blank" class="social-link"
+          aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+        </a>
+        <a href="https://www.youtube.com/@EASYMIXPRO" target="_blank" class="social-link" aria-label="YouTube">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2C1 8.14 1 12 1 12s0 3.86.42 5.58a2.78 2.78 0 0 0 1.94 2c1.72.42 8.6.42 8.6.42s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2C23 15.86 23 12 23 12s0-3.86-.42-5.58z">
+            </path>
+            <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"></polygon>
+          </svg>
+        </a>
+        <a href="https://t.me/easymixpro" target="_blank" class="social-link" aria-label="Telegram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </a>
+      </div>
+      <button class="cart-toggle" id="cartToggle" aria-label="Корзина">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="9" cy="21" r="1" />
+          <circle cx="20" cy="21" r="1" />
+          <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
+        </svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-particles" id="heroParticles"></div>
+
+    <div class="hero-content">
+      <div class="hero-text">
+        <span class="hero-badge">Казахстанский производитель</span>
+        <h1>Сухие строительные<br>смеси <span class="text-gradient">нового поколения</span></h1>
+        <p class="hero-subtitle">Более 20 профессиональных продуктов для строительства и ремонта. Европейское
+          оборудование, собственная лаборатория, сертификация ГОСТ и СТ РК.</p>
+        <div class="hero-actions">
+          <a href="#catalog" class="btn btn-primary">Каталог продукции</a>
+          <a href="#about" class="btn btn-outline">О компании</a>
+        </div>
+      </div>
+
+      <div class="hero-showcase">
+        <div class="showcase-carousel" id="showcaseCarousel">
+          <div class="showcase-bag active" data-index="0">
+            <img src="images/hero_tt1.png" alt="TileAdhesive TT1">
+          </div>
+          <div class="showcase-bag" data-index="1">
+            <img src="images/hero_tt2.png" alt="TileStandard TT2">
+          </div>
+          <div class="showcase-bag" data-index="2">
+            <img src="images/hero_tt3.png" alt="PerfectTile TT3">
+          </div>
+          <div class="showcase-bag" data-index="3">
+            <img src="images/hero_pl1.png" alt="PerfectLevel PL1">
+          </div>
+          <div class="showcase-bag" data-index="4">
+            <img src="images/hero_pl2.png" alt="PerfectLevel PL2">
+          </div>
+          <div class="showcase-bag" data-index="5">
+            <img src="images/hero_pl3.png" alt="Fibro Screed PL3">
+          </div>
+          <div class="showcase-bag" data-index="6">
+            <img src="images/hero_pl4.png" alt="PerfectTop PL4">
+          </div>
+          <div class="showcase-bag" data-index="7">
+            <img src="images/hero_pp1.png" alt="Perlite Plaster PP1">
+          </div>
+          <div class="showcase-bag" data-index="8">
+            <img src="images/hero_bc1.png" alt="Basecoat BC1">
+          </div>
+          <div class="showcase-bag" data-index="9">
+            <img src="images/hero_dp1.png" alt="DecoPlaster DP1">
+          </div>
+          <div class="showcase-bag" data-index="10">
+            <img src="images/hero_sc1.png" alt="SkimCoat SC1">
+          </div>
+          <div class="showcase-bag" data-index="11">
+            <img src="images/hero_ft2.png" alt="PolymerWhiteCoat FT2">
+          </div>
+          <div class="showcase-bag" data-index="12">
+            <img src="images/hero_2in1.png" alt="Putty + Plaster 2in1">
+          </div>
+          <div class="showcase-bag" data-index="13">
+            <img src="images/hero_3in1.png" alt="All Purpose 3in1">
+          </div>
+          <div class="showcase-bag" data-index="14">
+            <img src="images/hero_cc1.png" alt="Shotcrete Pro CC1">
+          </div>
+        </div>
+        <div class="showcase-label" id="showcaseLabel">
+          <span class="showcase-name">TileAdhesive TT1</span>
+          <span class="showcase-category">Плиточный клей</span>
+        </div>
+        <div class="showcase-dots" id="showcaseDots">
+          <button class="dot active" data-index="0"></button>
+          <button class="dot" data-index="1"></button>
+          <button class="dot" data-index="2"></button>
+          <button class="dot" data-index="3"></button>
+          <button class="dot" data-index="4"></button>
+          <button class="dot" data-index="5"></button>
+          <button class="dot" data-index="6"></button>
+          <button class="dot" data-index="7"></button>
+          <button class="dot" data-index="8"></button>
+          <button class="dot" data-index="9"></button>
+          <button class="dot" data-index="10"></button>
+          <button class="dot" data-index="11"></button>
+          <button class="dot" data-index="12"></button>
+          <button class="dot" data-index="13"></button>
+          <button class="dot" data-index="14"></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-stats-bar">
+      <div class="hero-stat">
+        <span class="hero-stat-number" data-target="3000000">0</span>
+        <span class="hero-stat-label">мешков произведено</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-number" data-target="50000">0</span>
+        <span class="hero-stat-label">тонн / год</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-number" data-target="20">0</span>
+        <span class="hero-stat-label">наименований</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-number" data-target="2017">0</span>
+        <span class="hero-stat-label">год основания</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CATEGORIES ============ -->
+  <section class="categories" id="categories">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Направления</span>
+        <h2>Категории <span class="text-accent">продукции</span></h2>
+        <p class="section-subtitle">Полный спектр сухих строительных смесей для любых задач</p>
+      </div>
+      <div class="categories-grid">
+        <a href="#catalog" class="category-card" data-filter="tile">
+          <div class="category-bg">
+            <img src="images/tile_adhesive.png" alt="Укладка плитки">
+          </div>
+          <div class="category-overlay"></div>
+          <div class="category-content">
+            <span class="category-count">3 продукта</span>
+            <h3>Плиточные клеи</h3>
+            <p>TT1 · TT2 · TT3</p>
+          </div>
+        </a>
+        <a href="#catalog" class="category-card" data-filter="leveling">
+          <div class="category-bg">
+            <img src="images/floor_leveling.png" alt="Наливной пол">
+          </div>
+          <div class="category-overlay"></div>
+          <div class="category-content">
+            <span class="category-count">3 продукта</span>
+            <h3>Наливные полы</h3>
+            <p>PL1 · PL2 · PL3</p>
+          </div>
+        </a>
+        <a href="#catalog" class="category-card" data-filter="plaster">
+          <div class="category-bg">
+            <img src="images/plaster_process.png" alt="Штукатурка стен">
+          </div>
+          <div class="category-overlay"></div>
+          <div class="category-content">
+            <span class="category-count">3 продукта</span>
+            <h3>Штукатурки</h3>
+            <p>PP1 · BC1 · DP1</p>
+          </div>
+        </a>
+        <a href="#catalog" class="category-card" data-filter="putty">
+          <div class="category-bg">
+            <img src="images/putty_process.png" alt="Шпаклёвка">
+          </div>
+          <div class="category-overlay"></div>
+          <div class="category-content">
+            <span class="category-count">3 продукта</span>
+            <h3>Шпаклёвки</h3>
+            <p>SC1 · FT1 · FT2</p>
+          </div>
+        </a>
+        <a href="#catalog" class="category-card" data-filter="universal">
+          <div class="category-bg">
+            <img src="images/masonry_process.png" alt="Универсальные смеси">
+          </div>
+          <div class="category-overlay"></div>
+          <div class="category-content">
+            <span class="category-count">2 продукта</span>
+            <h3>Универсальные</h3>
+            <p>2in1 · 3in1</p>
+          </div>
+        </a>
+        <a href="#catalog" class="category-card category-card--accent" data-filter="industrial">
+          <div class="category-overlay"></div>
+          <div class="category-content">
+            <span class="category-count">2 продукта</span>
+            <h3>Промышленные</h3>
+            <p>CC1 · PL4</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRODUCT CATALOG ============ -->
+  <section class="catalog" id="catalog">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Каталог</span>
+        <h2>Вся <span class="text-accent">продукция</span></h2>
+      </div>
+
+      <!-- Filter tabs -->
+      <div class="filter-bar" id="filterBar">
+        <button class="filter-btn active" data-filter="all">Все</button>
+        <button class="filter-btn" data-filter="tile">Плиточные клеи</button>
+        <button class="filter-btn" data-filter="leveling">Наливные полы</button>
+        <button class="filter-btn" data-filter="plaster">Штукатурки</button>
+        <button class="filter-btn" data-filter="putty">Шпаклёвки</button>
+        <button class="filter-btn" data-filter="universal">Универсальные</button>
+        <button class="filter-btn" data-filter="industrial">Промышленные</button>
+      </div>
+
+      <!-- Product grid -->
+      <div class="catalog-grid" id="catalogGrid">
+        <!-- Tile Adhesives -->
+        <div class="product-card" data-category="tile" data-product="tt1">
+          <div class="card-badge">Плиточный клей</div>
+          <div class="card-image"><img src="images/bag_tt1.png" alt="TileAdhesive TT1"></div>
+          <div class="card-info">
+            <h3>TileAdhesive <span>TT1</span></h3>
+            <p>Усиленный клей для керамогранита C1</p>
+            <div class="card-specs">
+              <span>25 кг</span><span>3–7 мм</span><span>C1</span>
+            </div>
+            <button class="card-btn" data-product="tt1">Подробнее</button>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="tile" data-product="tt2">
+          <div class="card-badge">Плиточный клей</div>
+          <div class="card-image"><img src="images/bag_tt2.png" alt="TileStandard TT2"></div>
+          <div class="card-info">
+            <h3>TileStandard <span>TT2</span></h3>
+            <p>Стандартный клей для плитки C0</p>
+            <div class="card-specs">
+              <span>25 кг</span><span>2–6 мм</span><span>C0</span>
+            </div>
+            <button class="card-btn" data-product="tt2">Подробнее</button>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="tile" data-product="tt3">
+          <div class="card-badge">Затирка</div>
+          <div class="card-image"><img src="images/bag_tt3.png" alt="Затирка TT3"></div>
+          <div class="card-info">
+            <h3>PerfectTile <span>TT3</span></h3>
+            <p>Белая водостойкая затирка CG2</p>
+            <div class="card-specs">
+              <span>2 кг</span><span>2–15 мм</span><span>CG2</span>
+            </div>
+            <button class="card-btn" data-product="tt3">Подробнее</button>
+          </div>
+        </div>
+
+
+
+        <!-- Leveling Compounds -->
+        <div class="product-card" data-category="leveling" data-product="pl1">
+          <div class="card-badge">Цементный наливной пол</div>
+          <div class="card-image"><img src="images/bag_pl1.png" alt="PerfectLevel PL1"></div>
+          <div class="card-info">
+            <h3>PerfectLevel <span>PL1</span></h3>
+            <p>Высокопрочный цементный пол</p>
+            <div class="card-specs">
+              <span>25 кг</span><span>2–40 мм</span><span>25 МПа</span>
+            </div>
+            <button class="card-btn" data-product="pl1">Подробнее</button>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="leveling" data-product="pl2">
+          <div class="card-badge">Гипсовый наливной пол</div>
+          <div class="card-image"><img src="images/bag_pl2.png" alt="PerfectLevel PL2"></div>
+          <div class="card-info">
+            <h3>PerfectLevel <span>PL2</span></h3>
+            <p>Финишный гипсовый пол</p>
+            <div class="card-specs">
+              <span>20 кг</span><span>5–20 мм</span><span>Гладкий</span>
+            </div>
+            <button class="card-btn" data-product="pl2">Подробнее</button>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="leveling" data-product="pl3">
+          <div class="card-badge">Наливной пол</div>
+          <div class="card-image"><img src="images/bag_pl3.png" alt="FibroScreed PL3"></div>
+          <div class="card-info">
+            <h3>FibroScreed <span>PL3</span></h3>
+            <p>Армированная стяжка с фиброй</p>
+            <div class="card-specs">
+              <span>25 кг</span><span>15–100 мм</span><span>М200</span>
+            </div>
+            <button class="card-btn" data-product="pl3">Подробнее</button>
+          </div>
+        </div>
+
+
+
+        <!-- Plasters -->
+        <div class="product-card" data-category="plaster" data-product="pp1">
+          <div class="card-badge">Штукатурка</div>
+          <div class="card-image"><img src="images/bag_pp1.png" alt="Perlite Plaster PP1"></div>
+          <div class="card-info">
+            <h3>PerlitePlaster <span>PP1</span></h3>
+            <p>Лёгкая теплоизоляционная штукатурка</p>
+            <div class="card-specs">
+              <span>30 кг</span><span>5–50 мм</span><span>Внутр.</span>
+            </div>
+            <button class="card-btn" data-product="pp1">Подробнее</button>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="plaster" data-product="bc1">
+          <div class="card-badge">Штукатурка</div>
+          <div class="card-image"><img src="images/bag_bc1.png" alt="BaseCoat BC1"></div>
+          <div class="card-info">
+            <h3>BaseCoat <span>BC1</span></h3>
+            <p>Базовая гипсовая штукатурка</p>
+            <div class="card-specs">
+              <span>30 кг</span><span>2–50 мм</span><span>Внутр.</span>
+            </div>
+            <button class="card-btn" data-product="bc1">Подробнее</button>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="plaster" data-product="dp1">
+          <div class="card-badge">Штукатурка</div>
+          <div class="card-image"><img src="images/bag_dp1.png" alt="DecoPlaster DP1"></div>
+          <div class="card-info">
+            <h3>DecoPlaster <span>DP1</span></h3>
+            <p>Декоративная штукатурка (Дождик)</p>
+            <div class="card-specs">
+              <span>25 кг</span><span>Зерно 2.5</span><span>Фасад</span>
+            </div>
+            <button class="card-btn" data-product="dp1">Подробнее</button>
+          </div>
+        </div>
+
+        <!-- Putties -->
+        <div class="product-card" data-category="putty" data-product="sc1">
+          <div class="card-badge">Шпаклёвка</div>
+          <div class="card-image"><img src="images/bag_sc1.png" alt="SkimCoat SC1"></div>
+          <div class="card-info">
+            <h3>SkimCoat <span>SC1</span></h3>
+            <p>Ультратонкая финишная шпаклёвка</p>
+            <div class="card-specs">
+              <span>25 кг</span><span>0.5–15 мм</span><span>Гладкая</span>
+            </div>
+            <button class="card-btn" data-product="sc1">Подробнее</button>
+          </div>
+        </div>
+
+
+
+        <div class="product-card" data-category="putty" data-product="ft2">
+          <div class="card-badge">Шпаклёвка</div>
+          <div class="card-image"><img src="images/bag_ft2.png" alt="FT2 PolymerWhiteCoat"></div>
+          <div class="card-info">
+            <h3>PolymerWhiteCoat <span>FT2</span></h3>
+            <p>Полимерная микро-шпаклёвка</p>
+            <div class="card-specs">
+              <span>25 кг</span><span>1–2 мм</span><span>Супербелая</span>
+            </div>
+            <button class="card-btn" data-product="ft2">Подробнее</button>
+          </div>
+        </div>
+
+        <!-- Universal -->
+        <div class="product-card" data-category="universal" data-product="2in1">
+          <div class="card-badge">Универсальная</div>
+          <div class="card-image"><img src="images/bag_2in1.png" alt="Putty+Plaster 2in1"></div>
+          <div class="card-info">
+            <h3>Putty+Plaster <span>2in1</span></h3>
+            <p>Штукатурка + Шпаклёвка 2в1</p>
+            <div class="card-specs">
+              <span>25 кг</span><span>0.5–15 мм</span><span>Быстро</span>
+            </div>
+            <button class="card-btn" data-product="2in1">Подробнее</button>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="universal" data-product="3in1">
+          <div class="card-badge">Универсальная</div>
+          <div class="card-image"><img src="images/bag_3in1.png" alt="All Purpose 3in1"></div>
+          <div class="card-info">
+            <h3>All Purpose <span>3in1</span></h3>
+            <p>Стяжка + Штукатурка + Кладка</p>
+            <div class="card-specs">
+              <span>30 кг</span><span>15–50 мм</span><span>М200</span>
+            </div>
+            <button class="card-btn" data-product="3in1">Подробнее</button>
+          </div>
+        </div>
+
+        <!-- Industrial -->
+        <div class="product-card" data-category="industrial" data-product="cc1">
+          <div class="card-badge">Промышленная</div>
+          <div class="card-image"><img src="images/bag_cc1.png" alt="ShotcretePro CC1"></div>
+          <div class="card-info">
+            <h3>ShotcretePro <span>CC1</span></h3>
+            <p>Торкрет-бетон сверхвысокой прочности</p>
+            <div class="card-specs">
+              <span>25 кг</span><span>≥ 45 МПа</span><span>W12</span>
+            </div>
+            <button class="card-btn" data-product="cc1">Подробнее</button>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="industrial" data-product="pl4">
+          <div class="card-badge">Промышленная</div>
+          <div class="card-image"><img src="images/bag_pl4.png" alt="Топпинг PL4"></div>
+          <div class="card-info">
+            <h3>PerfectTop <span>PL4</span></h3>
+            <p>Упрочнитель (топпинг) бетонных полов</p>
+            <div class="card-specs">
+              <span>25 кг</span><span>60 МПа</span><span>Износостойкий</span>
+            </div>
+            <button class="card-btn" data-product="pl4">Подробнее</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHOLESALE ============ -->
+  <section class="wholesale" id="wholesale">
+    <div class="container">
+      <div class="wholesale-grid">
+        <div class="wholesale-visual reveal">
+          <div class="wholesale-image-wrapper">
+            <img src="images/pallet_wholesale.png" alt="Оптовые поставки EasyMix">
+          </div>
+          <div class="delivery-badge">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="1" y="3" width="15" height="13"></rect>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+              <circle cx="5.5" cy="18.5" r="2.5"></circle>
+              <circle cx="18.5" cy="18.5" r="2.5"></circle>
+            </svg>
+            <span>Бесплатная доставка от 100 мешков</span>
+          </div>
+        </div>
+        <div class="wholesale-content reveal">
+          <span class="section-badge">Партнерство</span>
+          <h2>Оптовые продажи <span class="text-accent">напрямую с завода</span></h2>
+          <p class="wholesale-lead">Мы предлагаем специальные условия для дилеров, строительных компаний и крупных
+            застройщиков. Работайте с надежным локальным производителем.</p>
+
+          <div class="wholesale-features">
+            <div class="w-feature">
+              <div class="w-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2v20m0-20l-4 4m4-4l4 4"></path>
+                </svg>
+              </div>
+              <div class="w-text">
+                <h4>Минимальная наценка</h4>
+                <p>Прямые поставки без посредников гарантируют лучшую цену на рынке.</p>
+              </div>
+            </div>
+            <div class="w-feature">
+              <div class="w-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+              </div>
+              <div class="w-text">
+                <h4>Стабильность поставок</h4>
+                <p>Производственная мощность 200 тонн в сутки обеспечивает наличие любого объема.</p>
+              </div>
+            </div>
+            <div class="w-feature">
+              <div class="w-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+              </div>
+              <div class="w-text">
+                <h4>Сертификация РК</h4>
+                <p>Полный пакет документов: сертификаты СТ РК, СТ КЗ и протоколы испытаний.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="wholesale-actions">
+            <a href="#contacts" class="btn btn-primary">Запросить оптовый прайс</a>
+            <span class="price-note">Оптовые цены рассчитываются индивидуально</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-content reveal">
+          <span class="section-badge">О нас</span>
+          <h2>Производим качество<br><span class="text-accent">с 2017 года</span></h2>
+          <p>ТОО «ЭкоМикс» — казахстанский производитель сухих строительных смесей под брендом EasyMix. Наш завод в
+            Актобе оснащён полностью автоматизированным европейским оборудованием. Каждая партия продукции проходит
+            многоступенчатый контроль качества в собственной лаборатории.</p>
+          <p>Мы производим более 20 наименований продукции: плиточные клеи, наливные полы, штукатурки, шпаклёвки и
+            универсальные смеси. Наши продукты поставляются в 8+ городов Казахстана, а также экспортируются в Россию и
+            Кыргызстан.</p>
+
+          <div class="about-features">
+            <div class="about-feature">
+              <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path
+                    d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" />
+                </svg>
+              </div>
+              <div>
+                <strong>Собственная лаборатория</strong>
+                <p>Контроль от сырья до готовой продукции</p>
+              </div>
+            </div>
+            <div class="about-feature">
+              <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="3" />
+                  <path
+                    d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
+                </svg>
+              </div>
+              <div>
+                <strong>Европейское оборудование</strong>
+                <p>Полная автоматизация производства</p>
+              </div>
+            </div>
+            <div class="about-feature">
+              <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </div>
+              <div>
+                <strong>Сертификация ГОСТ и СТ РК</strong>
+                <p>Соответствие казахстанским и международным стандартам</p>
+              </div>
+            </div>
+            <div class="about-feature">
+              <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="2" y1="12" x2="22" y2="12" />
+                  <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+                </svg>
+              </div>
+              <div>
+                <strong>Экспорт</strong>
+                <p>Поставки в Россию и Кыргызстан</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-visual reveal">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-number counter" data-target="3000000">0</div>
+              <div class="stat-unit">+</div>
+              <div class="stat-label">мешков произведено</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number counter" data-target="200">0</div>
+              <div class="stat-unit">т/сутки</div>
+              <div class="stat-label">мощность завода</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number counter" data-target="50000">0</div>
+              <div class="stat-unit">т/год</div>
+              <div class="stat-label">годовой объём</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number counter" data-target="8">0</div>
+              <div class="stat-unit">+</div>
+              <div class="stat-label">городов Казахстана</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EASYLABS ============ -->
+  <section class="easylabs" id="easylabs">
+    <div class="container">
+
+      <!-- Premium Brand Header -->
+      <div class="labs-hero reveal">
+        <div class="labs-intro">
+          <span class="labs-tag">Инновации и качество</span>
+          <h2>Лаборатория <span class="text-accent">EasyMix Labs</span></h2>
+        </div>
+      </div>
+
+      <!-- Main Layout -->
+      <div class="labs-layout">
+        <div class="labs-story reveal">
+          <div class="story-content">
+            <p>Наша лаборатория была основана в <strong>2018</strong> году. С тех пор мы добились значительных успехов
+              не
+              только в разработке гражданских строительных смесей, но и в создании промышленных продуктов.</p>
+            <p>Среди наших успешных разработок — торкрет-смеси для промышленного строительства, топпинг для упрочнения
+              бетонных полов, а также <strong>NanoCem UT-9</strong> — ультрадисперсная тампонажная смесь.</p>
+            <p>Мы продолжаем расширять исследования, внедрять новые технологии и углублять коллаборации для создания
+              инновационных материалов будущего.</p>
+          </div>
+        </div>
+
+        <div class="labs-grid reveal">
+          <div class="direction-card">
+            <div class="card-num">01</div>
+            <div class="card-body">
+              <h4>Новые формулы</h4>
+              <p>Разработка сухих смесей для различных климатических условий.</p>
+            </div>
+          </div>
+
+          <div class="direction-card">
+            <div class="card-num">02</div>
+            <div class="card-body">
+              <h4>Механические свойства</h4>
+              <p>Улучшение долговечности и надежности конструкций.</p>
+            </div>
+          </div>
+
+          <div class="direction-card">
+            <div class="card-num">03</div>
+            <div class="card-body">
+              <h4>Эко-технологии</h4>
+              <p>Интеграция устойчивых компонентов для снижения воздействия на среду.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="labs-cta reveal">
+        <a href="#contacts" class="btn btn-primary">Связаться с EasyLabs</a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============ CERTIFICATES ============ -->
+  <section class="certificates" id="certificates">
+    <div class="container">
+      <div class="cert-grid reveal">
+        <div class="cert-image">
+          <img src="images/certificate.png" alt="Сертификат соответствия РК">
+        </div>
+        <div class="cert-content">
+          <span class="section-badge">Качество</span>
+          <h2>Сертификаты <span class="text-accent">соответствия</span></h2>
+          <p>Продукция EasyMix сертифицирована в Республике Казахстан и соответствует межгосударственным стандартам
+            ЕАЭС.</p>
+          <ul class="cert-list">
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
+              <div><strong>СТ РК 1168-2006</strong> — государственные стандарты РК</div>
+            </li>
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
+              <div><strong>СТ КЗ</strong> — сертификат о происхождении товара (Казахстанское содержание)</div>
+            </li>
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
+              <div><strong>ГОСТ</strong> — межгосударственные стандарты ЕАЭС</div>
+            </li>
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
+              <div><strong>Радиационная безопасность</strong> — Аэфф ≤ 370 Бк/кг, I класс</div>
+            </li>
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
+              <div><strong>EN 12004</strong> — европейская классификация C0, C1, C2</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!-- COMPANY HISTORY (ROADMAP) -->
+  <!-- ================================================================ -->
+  <section class="history" id="history">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Наш путь</span>
+        <h2>История успеха</h2>
+        <p class="section-subtitle">Этапы становления ведущего производителя сухих строительных смесей</p>
+      </div>
+
+      <div class="history-roadmap">
+        <div class="roadmap-line"></div>
+
+        <!-- 2017 -->
+        <div class="roadmap-item reveal">
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-content">
+            <span class="roadmap-year">2017</span>
+            <div class="roadmap-title">Старт</div>
+            <p>Запуск первого цеха в Актобе (20 т/сутки). Выпуск первой партии клея TileAdhesive.</p>
+          </div>
+        </div>
+
+        <!-- 2020 -->
+        <div class="roadmap-item reveal">
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-content">
+            <span class="roadmap-year">2020</span>
+            <div class="roadmap-title">Масштабирование</div>
+            <p>Автоматизация линий, рост до 50 т/сутки. Статус отечественного производителя.</p>
+          </div>
+        </div>
+
+        <!-- 2023 -->
+        <div class="roadmap-item reveal">
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-content">
+            <span class="roadmap-year">2023</span>
+            <div class="roadmap-title">Промышленный уровень</div>
+            <p>Линейка промышленных смесей. Партнёрство с ArcelorMittal. Торкрет-бетон 45 МПа.</p>
+          </div>
+        </div>
+
+        <!-- 2024-2025 -->
+        <div class="roadmap-item reveal">
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-content">
+            <span class="roadmap-year">2024-2025</span>
+            <div class="roadmap-title">Завод СПК</div>
+            <p>Новый комплекс 1700 м² с ЖД тупиком. Оборудование Corinmac. Мощность 20 т/час.</p>
+          </div>
+        </div>
+
+        <!-- 2026 -->
+        <div class="roadmap-item reveal">
+          <div class="roadmap-dot" style="background: var(--white); border-color: var(--green);"></div>
+          <div class="roadmap-content">
+            <span class="roadmap-year" style="color: var(--gray-400);">2026</span>
+            <div class="roadmap-title">NanoCem и Нефтегаз</div>
+            <p>Прорыв в нефтегазовой отрасли. Тампонажная смесь NanoCem UT-9 для скважин.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTS ============ -->
+  <section class="contacts" id="contacts">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Связаться</span>
+        <h2>Контакты</h2>
+      </div>
+      <div class="contacts-grid reveal">
+        <div class="contact-card">
+          <div class="contact-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
+            </svg>
+          </div>
+          <strong>Телефон</strong>
+          <a href="tel:+77475390000">8 (747) 539-00-00</a>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+          </div>
+          <strong>Email</strong>
+          <a href="mailto:info@easymix.kz">info@easymix.kz</a>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="2" y1="12" x2="22" y2="12" />
+              <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+            </svg>
+          </div>
+          <strong>Сайт</strong>
+          <a href="https://easymix.kz">www.easymix.kz</a>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+          </div>
+          <strong>Производство</strong>
+          <span>г. Актобе, Казахстан</span>
+        </div>
+      </div>
+
+      <div class="geography reveal">
+        <h3>География поставок</h3>
+        <div class="city-tags">
+          <span>Алматы</span><span>Астана</span><span>Шымкент</span>
+          <span>Караганда</span><span>Актобе</span><span>Тараз</span>
+          <span>Павлодар</span><span>Атырау</span>
+          <span class="city-export">🇷🇺 Россия</span>
+          <span class="city-export">🇰🇬 Кыргызстан</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="images/easymix-emblem.svg" alt="EasyMix" class="footer-logo">
+          <span class="footer-name">EASYMIX</span>
+          <p>Сухие строительные смеси нового поколения</p>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/easymix.kz?igsh=MXI5d21iNThnaGlpdg==" target="_blank"
+              aria-label="Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+            <a href="https://www.youtube.com/@EASYMIXPRO" target="_blank" aria-label="YouTube">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2C1 8.14 1 12 1 12s0 3.86.42 5.58a2.78 2.78 0 0 0 1.94 2c1.72.42 8.6.42 8.6.42s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2C23 15.86 23 12 23 12s0-3.86-.42-5.58z">
+                </path>
+                <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"></polygon>
+              </svg>
+            </a>
+            <a href="https://t.me/easymixpro" target="_blank" aria-label="Telegram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <h4>Навигация</h4>
+          <a href="#hero">Главная</a>
+          <a href="#categories">Продукция</a>
+          <a href="#about">О компании</a>
+          <a href="#contacts">Контакты</a>
+        </div>
+        <div class="footer-links">
+          <h4>Продукция</h4>
+          <a href="#catalog">Плиточные клеи</a>
+          <a href="#catalog">Наливные полы</a>
+          <a href="#catalog">Штукатурки</a>
+          <a href="#catalog">Шпаклёвки</a>
+        </div>
+        <div class="footer-contact">
+          <h4>Контакты</h4>
+          <a href="tel:+77475390000">8 (747) 539-00-00</a>
+          <a href="mailto:info@easymix.kz">info@easymix.kz</a>
+          <span>г. Актобе, Казахстан</span>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-certificates">
+          <span><strong>СТ РК</strong> 1168-2006</span>
+          <span class="cert-divider">|</span>
+          <span><strong>СТ КЗ</strong> (Казахстанское содержание)</span>
+        </div>
+        <p>© 2017–2025 <strong>EasyMix</strong> — ТОО «ЭкоМикс». Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ MODAL ============ -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modalClose">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+  <!-- ============ CART SIDEBAR ============ -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <aside class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3>Корзина</h3>
+      <button class="cart-close" id="cartClose">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty" id="cartEmpty">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+          opacity="0.3">
+          <circle cx="9" cy="21" r="1" />
+          <circle cx="20" cy="21" r="1" />
+          <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
+        </svg>
+        <p>Корзина пуста</p>
+      </div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none;">
+      <div class="cart-total">
+        <span>Товаров:</span>
+        <span id="cartTotalCount">0</span>
+      </div>
+      <form class="order-form" id="orderForm">
+        <h4>Оставить заявку</h4>
+        <div class="form-group">
+          <input type="text" id="orderName" placeholder="Ваше имя" required>
+        </div>
+        <div class="form-group">
+          <input type="tel" id="orderPhone" placeholder="+7 (___) ___-__-__" required>
+        </div>
+        <div class="form-group">
+          <input type="email" id="orderEmail" placeholder="Email" required>
+        </div>
+        <button type="submit" class="order-submit">Отправить заявку</button>
+      </form>
+    </div>
+  </aside>
+
+  <!-- ============ ORDER SUCCESS TOAST ============ -->
+  <div class="toast" id="toast">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <path d="M20 6L9 17l-5-5" />
+    </svg>
+    <span id="toastMessage">Товар добавлен в корзину</span>
+  </div>
+
+  <!-- ============ CALCULATOR SIDEBAR ============ -->
+  <div class="calc-sidebar-overlay" id="calcOverlay"></div>
+  <aside class="calc-sidebar" id="calcSidebar">
+    <div class="calc-sidebar-header">
+      <div class="calc-sidebar-logo">EASY<span>MIX</span></div>
+      <button class="calc-sidebar-close" id="calcSidebarClose">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+    <div class="calc-sidebar-content">
+      <div class="calc-nav-wrap">
+        <div class="calc-nav-tabs">
+          <button class="cntab active" data-tab="wall"><span class="cntab-icon">🧱</span><span
+              class="cntab-name">СТЕНА</span></button>
+          <button class="cntab" data-tab="tile"><span class="cntab-icon">⬜</span><span
+              class="cntab-name">ПЛИТКА</span></button>
+          <button class="cntab" data-tab="floor"><span class="cntab-icon">⬛</span><span
+              class="cntab-name">ПОЛЫ</span></button>
+          <button class="cntab" data-tab="topping"><span class="cntab-icon">🏭</span><span
+              class="cntab-name">ТОППИНГ</span></button>
+          <button class="cntab" data-tab="industrial"><span class="cntab-icon">⚙️</span><span
+              class="cntab-name">ПРОМ.</span></button>
+          <button class="cntab" data-tab="ceiling"><span class="cntab-icon">🔲</span><span
+              class="cntab-name">ПОТОЛОК</span></button>
+        </div>
+      </div>
+
+      <div class="calc-main">
+        <div class="calc-panels">
+          <!-- СТЕНА -->
+          <div class="cpanel active" id="cpanel-wall">
+            <div class="cstitle">Стена — штукатурки и шпаклёвки</div>
+            <div class="cstep">
+              <div class="cslbl"><span class="csn">1</span>Выберите смесь</div>
+              <div class="cplist" id="cpl-wall"></div>
+            </div>
+            <div class="cstep">
+              <div class="cslbl"><span class="csn">2</span>Площадь и слои</div>
+              <div class="cirow">
+                <div class="cig"><label>Площадь</label>
+                  <div class="ciw"><input type="number" id="w-area" placeholder="0"><span class="ciu">м²</span></div>
+                </div>
+                <div class="cig"><label>Слоёв</label>
+                  <div class="ciw"><input type="number" id="w-layers" value="1"><span class="ciu">шт</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="cstep" id="w-thk-step" style="display:none">
+              <div class="cslbl"><span class="csn">3</span>Толщина слоя</div>
+              <div class="crange-top"><span class="crange-lim" id="w-thk-lim">—</span><span class="crange-val"
+                  id="w-thk-val">— мм</span></div>
+              <input type="range" id="w-thk" min="1" max="50" value="10">
+            </div>
+            <div class="cstep">
+              <div class="cslbl"><span class="csn">4</span>Запас</div>
+              <div class="cig"><label>Запас на отходы</label>
+                <div class="ciw"><input type="number" id="w-res" value="10"><span class="ciu">%</span></div>
+              </div>
+            </div>
+            <div class="cwarn-box" id="w-warn"></div>
+            <button class="ccalc-btn" onclick="calc('wall')">⚡ РАССЧИТАТЬ</button>
+          </div>
+
+          <!-- ПЛИТКА -->
+          <div class="cpanel" id="cpanel-tile">
+            <div class="cstitle">Плитка — расход клея</div>
+            <div class="cstep">
+              <div class="cslbl"><span class="csn">1</span>Выберите клей</div>
+              <div class="cplist" id="cpl-tile"></div>
+            </div>
+            <div class="cstep">
+              <div class="cslbl"><span class="csn">2</span>Площадь и поверхность</div>
+              <div class="cirow">
+                <div class="cig"><label>Площадь</label>
+                  <div class="ciw"><input type="number" id="t-area" placeholder="0"><span class="ciu">м²</span></div>
+                </div>
+                <div class="cig"><label>Поверхность</label>
+                  <div class="ciw"><select id="t-surf">
+                      <option value="0">Стена</option>
+                      <option value="0.5">Пол (+0.5 кг/м²)</option>
+                    </select></div>
+                </div>
+              </div>
+            </div>
+            <div class="cstep">
+              <div class="cslbl"><span class="csn">3</span>Размер гребёнки</div>
+              <div class="crpills" id="comb-pills">
+                <div class="crpill sel" data-v="6">6 мм</div>
+                <div class="crpill" data-v="8">8 мм</div>
+                <div class="crpill" data-v="10">10 мм</div>
+              </div>
+            </div>
+            <div class="cstep">
+              <div class="cslbl"><span class="csn">4</span>Размер плитки</div>
+              <div class="cirow">
+                <div class="cig"><label>Ширина</label>
+                  <div class="ciw"><input type="number" id="t-w" placeholder="60"><span class="ciu">см</span></div>
+                </div>
+                <div class="cig"><label>Высота</label>
+                  <div class="ciw"><input type="number" id="t-h" placeholder="60"><span class="ciu">см</span></div>
+                </div>
+              </div>
+              <div class="cig" style="margin-top:12px"><label>Запас (подрезка)</label>
+                <div class="ciw"><input type="number" id="t-res" value="15"><span class="ciu">%</span></div>
+              </div>
+            </div>
+            <div class="cwarn-box" id="t-warn"></div>
+            <button class="ccalc-btn" onclick="calc('tile')">⚡ РАССЧИТАТЬ</button>
+          </div>
+
+          <!-- ПОЛЫ -->
+          <div class="cpanel" id="cpanel-floor">
+            <div class="cstitle">Полы — стяжки и наливные полы</div>
+            <div class="cstep">
+              <div class="cslbl"><span class="csn">1</span>Выберите смесь</div>
+              <div class="cplist" id="cpl-floor"></div>
+            </div>
+            <div class="cstep">
+              <div class="cslbl"><span class="csn">2</span>Площадь и запас</div>
+              <div class="cirow">
+                <div class="cig"><label>Площадь</label>
+                  <div class="ciw"><input type="number" id="f-area" placeholder="0"><span class="ciu">м²</span></div>
+                </div>
+                <div class="cig"><label>Запас</label>
+                  <div class="ciw"><input type="number" id="f-res" value="10"><span class="ciu">%</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="cstep">
+              <div class="cslbl"><span class="csn">3</span>Толщина слоя</div>
+              <div class="crange-top"><span class="crange-lim" id="f-thk-lim">Выберите смесь</span><span
+                  class="crange-val" id="f-thk-val">10 мм</span></div>
+              <input type="range" id="f-thk" min="2" max="40" value="10">
+            </div>
+            <div class="cwarn-box" id="f-warn"></div>
+            <button class="ccalc-btn" onclick="calc('floor')">⚡ РАССЧИТАТЬ</button>
+          </div>
+
+          <!-- ТОППИНГ -->
+          <div class="cpanel" id="cpanel-topping">
+            <div class="cstitle">Топпинг — упрочнение пола</div>
+            <div class="cstep">
+              <div class="cslbl"><span class="csn">1</span>Площадь бетонного пола</div>
+              <div class="cig"><label>Площадь</label>
+                <div class="ciw"><input type="number" id="tp-area" placeholder="0"><span class="ciu">м²</span></div>
+              </div>
+            </div>
+            <div class="cstep">
+              <div class="cslbl"><span class="csn">2</span>Тип нагрузки</div>
+              <div class="crpills crpills--stacked" id="load-pills">
+                <div class="crpill sel" data-v="3">Лёгкая (3 кг/м²)</div>
+                <div class="crpill" data-v="5">Средняя (5 кг/м²)</div>
+                <div class="crpill" data-v="7">Тяжёлая (7 кг/м²)</div>
+              </div>
+            </div>
+            <button class="ccalc-btn" onclick="calc('topping')">⚡ РАССЧИТАТЬ</button>
+          </div>
+
+          <!-- ПРОМЫШЛЕННЫЕ -->
+          <div class="cpanel" id="cpanel-industrial">
+            <div class="cstitle">Промышленные смеси</div>
+            <div class="cstep">
+              <div class="cslbl"><span class="csn">1</span>Тип смеси</div>
+              <div class="crpills" id="ind-pills">
+                <div class="crpill sel" data-v="cc1">CC1</div>
+                <div class="crpill" data-v="nano">UT-9</div>
+              </div>
+            </div>
+            <div id="cc1-block">
+              <div class="cstep">
+                <div class="cslbl"><span class="csn">2</span>Параметры</div>
+                <div class="cirow">
+                  <div class="cig"><label>Площадь</label>
+                    <div class="ciw"><input type="number" id="cc-area" placeholder="0"><span class="ciu">м²</span></div>
+                  </div>
+                  <div class="cig"><label>Запас</label>
+                    <div class="ciw"><input type="number" id="cc-res" value="15"><span class="ciu">%</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="cstep">
+                <div class="cslbl"><span class="csn">3</span>Толщина (10–120 мм)</div>
+                <div class="crange-val" id="cc-thk-val">30 мм</div>
+                <input type="range" id="cc-thk" min="10" max="120" value="30">
+              </div>
+            </div>
+            <div id="nano-block" style="display:none">
+              <div class="cstep">
+                <div class="cslbl"><span class="csn">2</span>Скважина</div>
+                <div class="cirow">
+                  <div class="cig"><label>Диаметр (мм)</label>
+                    <div class="ciw"><input type="number" id="na-d" placeholder="200"></div>
+                  </div>
+                  <div class="cig"><label>Длина (м)</label>
+                    <div class="ciw"><input type="number" id="na-l" placeholder="100"></div>
+                  </div>
+                </div>
+                <div class="cig" style="margin-top:12px"><label>Запас</label>
+                  <div class="ciw"><input type="number" id="na-res" value="20"><span class="ciu">%</span></div>
+                </div>
+              </div>
+            </div>
+            <button class="ccalc-btn" onclick="calc('industrial')">⚡ РАССЧИТАТЬ</button>
+          </div>
+
+          <!-- ПОТОЛОК -->
+          <div class="cpanel" id="cpanel-ceiling">
+            <div class="cstitle">Потолок — шпаклёвки</div>
+            <div class="cstep">
+              <div class="cslbl"><span class="csn">1</span>Выберите шпаклёвку</div>
+              <div class="cplist" id="cpl-ceiling"></div>
+            </div>
+            <div class="cstep">
+              <div class="cslbl"><span class="csn">2</span>Площадь и слои</div>
+              <div class="cirow">
+                <div class="cig"><label>Площадь</label>
+                  <div class="ciw"><input type="number" id="c-area" placeholder="0"><span class="ciu">м²</span></div>
+                </div>
+                <div class="cig"><label>Слоёв</label>
+                  <div class="ciw"><input type="number" id="c-layers" value="2"><span class="ciu">шт</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="cstep">
+              <div class="cslbl"><span class="csn">3</span>Толщина</div>
+              <div class="crange-val" id="c-thk-val">1 мм</div>
+              <input type="range" id="c-thk" min="0.5" max="3" value="1" step="0.5">
+            </div>
+            <button class="ccalc-btn" onclick="calc('ceiling')">⚡ РАССЧИТАТЬ</button>
+          </div>
+        </div>
+
+        <!-- РЕЗУЛЬТАТ -->
+        <div class="cresult-card" id="cresult-card" style="display:none">
+          <div class="cres-header">
+            <div class="cres-pname" id="cr-pname">—</div>
+            <div class="cres-pcat" id="cr-pcat">—</div>
+          </div>
+          <div class="cres-big">
+            <div class="cres-num" id="cr-bags">0</div>
+            <div class="cres-lbl">мешков к заказу</div>
+          </div>
+          <div class="cres-grid">
+            <div class="cres-box">
+              <div class="cres-v" id="cr-kg">0 кг</div>
+              <div class="cres-l">Расход</div>
+            </div>
+            <div class="cres-box">
+              <div class="cres-v" id="cr-bw">25 кг</div>
+              <div class="cres-l">Мешок</div>
+            </div>
+          </div>
+          <div class="ctip-box" id="cr-tip">—</div>
+
+          <!-- Order Actions -->
+          <div class="cres-actions">
+            <button class="ccalc-btn ccalc-btn--order" id="cOrderBtn" onclick="showOrderForm()">ОФОРМИТЬ В 1
+              КЛИК</button>
+            <button class="creset-btn" onclick="resetCalc()">Сбросить</button>
+          </div>
+
+          <!-- Contact Form (Hidden) -->
+          <form class="corder-form" id="cOrderForm" style="display:none">
+            <div class="cstitle">Контактные данные</div>
+            <div class="cig">
+              <label>Ваше имя</label>
+              <div class="ciw"><input type="text" id="co-name" placeholder="Иван" required></div>
+            </div>
+            <div class="cig" style="margin-top:12px">
+              <label>Телефон / WhatsApp</label>
+              <div class="ciw"><input type="tel" id="co-phone" placeholder="+7 (___) ___-__-__" required></div>
+            </div>
+            <button type="submit" class="ccalc-btn" style="margin-top:20px">📦 ОТПРАВИТЬ ЗАЯВКУ</button>
+            <button type="button" class="creset-btn" onclick="hideOrderForm()">Назад</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ FLOATING ACTIONS ============ -->
+  <div class="floating-actions">
+    <button class="calc-float" id="calcToggle" aria-label="Калькулятор">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+        <line x1="8" y1="6" x2="16" y2="6"></line>
+        <line x1="16" y1="14" x2="16" y2="18"></line>
+        <circle cx="9" cy="10" r="0.5" fill="currentColor"></circle>
+        <circle cx="12" cy="10" r="0.5" fill="currentColor"></circle>
+        <circle cx="15" cy="10" r="0.5" fill="currentColor"></circle>
+        <circle cx="9" cy="14" r="0.5" fill="currentColor"></circle>
+        <circle cx="12" cy="14" r="0.5" fill="currentColor"></circle>
+        <circle cx="9" cy="18" r="0.5" fill="currentColor"></circle>
+        <circle cx="12" cy="18" r="0.5" fill="currentColor"></circle>
+      </svg>
+    </button>
+    <a href="https://wa.me/77471111964" class="wa-float" target="_blank" aria-label="WhatsApp">
+      <div class="wa-pulse"></div>
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-7.6 8.38 8.38 0 0 1 3.8.9L21 4.5z"></path>
+      </svg>
+    </a>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
