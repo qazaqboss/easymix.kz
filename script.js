@@ -4,6 +4,7 @@
    ================================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
+  console.log("EasyMix Script V2 Loaded - Embed logic active");
 
   // ---- Product Data (for modals) ----
   const productData = {
@@ -515,6 +516,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalContent = document.getElementById('modalContent');
   const modalClose = document.getElementById('modalClose');
 
+  function getYoutubeEmbedUrl(url) {
+    if (!url) return null;
+    let videoId = '';
+    if (url.includes('youtu.be/')) {
+      videoId = url.split('youtu.be/')[1].split('?')[0];
+    } else if (url.includes('youtube.com/watch?v=')) {
+      videoId = url.split('v=')[1].split('&')[0];
+    } else if (url.includes('youtube.com/embed/')) {
+      videoId = url.split('embed/')[1].split('?')[0];
+    }
+    return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1` : null;
+  }
+
   function openModal(productId) {
     const product = productData[productId];
     if (!product) return;
@@ -527,6 +541,8 @@ document.addEventListener('DOMContentLoaded', () => {
       `<li>${app}</li>`
     ).join('');
 
+    const embedUrl = getYoutubeEmbedUrl(product.video);
+
     modalContent.innerHTML = `
       <div class="modal-product-header">
         <div class="modal-product-img"><img src="${product.img}" alt="${product.name} ${product.code}"></div>
@@ -534,10 +550,20 @@ document.addEventListener('DOMContentLoaded', () => {
           <h2>${product.name} <span>${product.code}</span></h2>
           <div class="modal-category">${product.category}</div>
           <div class="modal-description">${product.description}</div>
-          ${product.video ? `<a href="${product.video}" target="_blank" rel="noopener" class="modal-video-btn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            Смотреть видео
-          </a>` : ''}
+          ${embedUrl ? `
+            <div class="modal-video-container">
+              <iframe 
+                src="${embedUrl}" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+              </iframe>
+            </div>
+          ` : (product.video ? `
+            <a href="${product.video}" target="_blank" rel="noopener" class="modal-video-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Смотреть видео
+            </a>
+          ` : '')}
         </div>
       </div>
       <div class="modal-specs">
@@ -840,16 +866,17 @@ document.addEventListener('DOMContentLoaded', () => {
       { id: 'ft1', name: 'FinalTouch FT1', cat: 'Финишная шпаклёвка', col: '#d5dbdb', byT: true, c: 1.2, bw: 25, mn: 0.5, mx: 2, tip: 'Финишная шпаклёвка под окраску и обои.' },
       { id: 'ft2', name: 'PolymerWhiteCoat FT2', cat: 'Полимерная шпаклёвка', col: '#f8f9fa', byT: true, c: 1.1, bw: 25, mn: 0.5, mx: 2, tip: 'Белоснежная полимерная шпаклёвка.' },
       { id: 'sc1', name: 'Skimcoat SC1', cat: 'Выравнивающая шпаклёвка', col: '#b2bec3', byT: true, c: 1.4, bw: 25, mn: 1, mx: 3, tip: 'Цементная шпаклёвка. Водостойкая.' },
+      { id: '3in1w', name: '3in1 Specialist', cat: 'Цементная штукатурка', col: '#2c3e50', byT: true, c: 1.6, bw: 25, mn: 5, mx: 30, tip: 'Универсальная цементная штукатурка для внутренних и наружных работ.' },
     ],
     tile: [
-      { id: 'tt2', name: 'TileStandard TT2', cat: 'Стандартный клей', col: '#f39c12', bw: 25, c: { 6: 3.5, 8: 4.0, 10: 4.5 }, tip: 'Стандартный клей для керамики и керамогранита.' },
       { id: 'tt1', name: 'TileAdhesive TT1', cat: 'Усиленный клей C2', col: '#e67e22', bw: 25, c: { 6: 4.0, 8: 4.5, 10: 5.0 }, tip: 'Усиленный клей C2 для тяжёлой плитки.' },
-      { id: 'tt4', name: 'Tile2Tile TT4', cat: 'Клей плитка-на-плитку', col: '#d35400', bw: 25, c: { 6: 3.0, 8: 3.5, 10: 4.0 }, tip: 'Для реновации — новая плитка на старую.' },
+      { id: '3in1t', name: '3in1 Specialist', cat: 'Плиточный клей', col: '#2c3e50', bw: 25, c: { 6: 3.5, 8: 4.0, 10: 4.5 }, tip: 'Универсальный клей для кафеля и керамогранита.' },
     ],
     floor: [
       { id: 'pl1', name: 'PerfectLevel PL1', cat: 'Самовыравнивающийся пол', col: '#3498db', byT: true, c: 1.8, bw: 25, mn: 2, mx: 10, tip: 'Самовыравнивающийся пол. Растекается сам.' },
       { id: 'pl2', name: 'PerfectLevel PL2', cat: 'Финишный выравниватель', col: '#2980b9', byT: true, c: 1.8, bw: 20, mn: 5, mx: 20, tip: 'Гипсовый наливной пол. Финишный слой 5–20 мм.' },
-      { id: 'pl3', name: 'FibroScreed PL3', cat: 'Армированная стяжка', col: '#1a6ba6', byT: true, c: 2.0, bw: 25, mn: 10, mx: 40, tip: 'Фиброармированная стяжка для высоких нагрузок.' },
+      { id: 'pl3', name: 'FibroScreed PL3', cat: 'Армированная стяжка', col: '#1a6ba6', byT: true, c: 2.0, bw: 25, mn: 10, mx: 40, tip: 'Фибороармированная стяжка для высоких нагрузок.' },
+      { id: '3in1f', name: '3in1 Specialist', cat: 'Стяжка для пола', col: '#2c3e50', byT: true, c: 1.8, bw: 25, mn: 10, mx: 50, tip: 'Цементная стяжка для пола до 5 см.' },
     ],
     ceiling: [
       { id: 'ft1c', name: 'FinalTouch FT1', cat: 'Финишная шпаклёвка', col: '#d5dbdb', byT: true, c: 1.2, bw: 25, mn: 0.5, mx: 3, tip: 'Финишная шпаклёвка на потолок.' },
@@ -927,7 +954,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('#ind-pills .crpill').forEach(x => x.classList.remove('sel'));
     p.classList.add('sel'); indType = p.dataset.v;
     document.getElementById('cc1-block').style.display = indType === 'cc1' ? '' : 'none';
-    document.getElementById('nano-block').style.display = indType === 'nano' ? '' : 'none';
   };
 
   window.calc = (sec) => {
@@ -980,20 +1006,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const total = Math.ceil(kg / 25);
       showRes('PerfectTop PL4', 'Топпинг', kg, 25, 0, 0, total, 'Наносите в 2 этапа.');
     } else if (sec === 'industrial') {
-      if (indType === 'cc1') {
-        const area = parseFloat(document.getElementById('cc-area').value) || 0;
-        const t = parseFloat(document.getElementById('cc-thk').value);
-        const res = parseFloat(document.getElementById('cc-res').value) / 100 || 0.15;
-        const kg = area * (20.5 / 10) * t;
-        showRes('Shotcrete Pro CC1', 'Промышленный бетон', kg * (1 + res), 25, 0, 0, Math.ceil((kg / 25) * (1 + res)), 'Для крупных объектов.');
-      } else {
-        const d = parseFloat(document.getElementById('na-d').value) || 0;
-        const l = parseFloat(document.getElementById('na-l').value) || 0;
-        const res = parseFloat(document.getElementById('na-res').value) / 100 || 0.2;
-        const vol = Math.PI * (d / 1000 / 2) ** 2 * l * 1000;
-        const kg = vol * 1.9;
-        showRes('NanoCem UT-9', 'Тампонажная смесь', kg * (1 + res), 25, 0, 0, Math.ceil((kg / 25) * (1 + res)), 'Для скважин.');
-      }
+      const area = parseFloat(document.getElementById('cc-area').value) || 0;
+      const t = parseFloat(document.getElementById('cc-thk').value);
+      const res = parseFloat(document.getElementById('cc-res').value) / 100 || 0.15;
+      const kg = area * (20.5 / 10) * t;
+      showRes('Shotcrete Pro CC1', 'Промышленный бетон', kg * (1 + res), 25, 0, 0, Math.ceil((kg / 25) * (1 + res)), 'Для крупных объектов.');
     } else if (sec === 'ceiling') {
       const p = calcData.ceiling.find(x => x.id === selected.ceiling); if (!p) return alert('Выберите смесь');
       const area = parseFloat(document.getElementById('c-area').value) || 0;

@@ -1557,11 +1557,62 @@ h2 {
 }
 
 .modal-video-btn:hover {
-  background: #cc0000;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+  background: rgba(45, 138, 78, 0.15);
+  transform: translateY(-2px);
 }
 
+/* Embedded Video Container */
+.modal-video-container {
+  margin-top: 20px;
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  height: 0;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--dark);
+  box-shadow: var(--shadow-md);
+}
+
+.modal-video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Brand Video Section */
+.brand-video {
+  padding: 100px 0;
+  background: var(--white);
+  overflow: hidden;
+}
+
+.video-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background: var(--dark);
+}
+
+.video-aspect {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+}
+
+.video-aspect iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
 .modal-specs {
   margin-bottom: 24px;
 }

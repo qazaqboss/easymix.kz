@@ -1,0 +1,11 @@
+{
+    "name": "easymix-website",
+    "version": "1.0.0",
+    "description": "EasyMix Kazakhstan - building materials website",
+    "scripts": {
+        "start": "serve ."
+    },
+    "devDependencies": {
+        "serve": "^14.2.1"
+    }
+}
