@@ -166,10 +166,10 @@ document.addEventListener('DOMContentLoaded', () => {
       applications: ['Одновременная штукатурка и шпаклёвка', 'Ремонт и реставрация стен', 'Экономичные ремонтные работы']
     },
     '3in1': {
-      name: 'All Purpose', code: '3in1', category: 'Универсальная смесь',
+      name: 'All Purpose', code: '', category: 'Универсальная смесь',
       img: 'images/bag_3in1.png',
       video: 'https://youtu.be/uwGvJCkAlUw?si=4Ax9foF1xbHb5MNm',
-      description: 'Универсальная цементная смесь «три в одном»: стяжка, штукатурка и кладочный раствор. Для любых строительных задач внутри и снаружи.',
+      description: 'Универсальная цементная смесь: стяжка, штукатурка и кладочный раствор. Для любых строительных задач внутри и снаружи.',
       specs: [
         ['Масса', '30 кг'], ['Толщина слоя', '15–50 мм'], ['Марка прочности', 'М150–М200'],
         ['Расход материала', '22–25 кг/м² на 10мм'], ['Жизнеспособность', '2 часа'], ['Прочность', '20 МПа'],
@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { name: 'SkimCoat SC1', slogan: 'Ультратонкая финишная шпаклёвка' },
     { name: 'PolymerWhiteCoat FT2', slogan: 'Ультратонкая полимерная шпаклёвка' },
     { name: 'Putty + Plaster 2in1', slogan: 'Штукатурка + Шпаклёвка 2в1' },
-    { name: 'All Purpose 3in1', slogan: 'Стяжка + Штукатурка + Кладка' },
+    { name: 'All Purpose', slogan: 'Стяжка + Штукатурка + Кладка' },
     { name: 'Shotcrete Pro CC1', slogan: 'Торкрет-бетон сверхвысокой прочности' }
   ];
 
@@ -802,7 +802,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Order form submission
-  orderForm.addEventListener('submit', (e) => {
+  orderForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = document.getElementById('orderName').value.trim();
     const phone = document.getElementById('orderPhone').value.trim();
@@ -811,19 +811,43 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!name || !phone || !email) return;
 
     const orderItems = cart.map(i => `${i.name} x${i.qty}`).join(', ');
-    console.log('=== НОВАЯ ЗАЯВКА ===');
-    console.log('Имя:', name);
-    console.log('Телефон:', phone);
-    console.log('Email:', email);
-    console.log('Товары:', orderItems);
-    console.log('====================');
 
-    // Clear cart & form
-    cart.length = 0;
-    updateCartUI();
-    orderForm.reset();
-    closeCart();
-    showToast('Заявка успешно отправлена! Мы свяжемся с вами.');
+    // Highlight loading state
+    const submitBtn = orderForm.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Отправка...';
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          phone,
+          email,
+          products: orderItems,
+          source: 'Корзина'
+        }),
+      });
+
+      if (response.ok) {
+        // Clear cart & form
+        cart.length = 0;
+        updateCartUI();
+        orderForm.reset();
+        closeCart();
+        showToast('Заявка успешно отправлена! Мы свяжемся с вами.');
+      } else {
+        throw new Error('Failed to send');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Ошибка при отправке. Пожалуйста, попробуйте позже.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+    }
   });
   // ================================================================
   // CALCULATOR LOGIC
@@ -866,21 +890,24 @@ document.addEventListener('DOMContentLoaded', () => {
       { id: 'ft1', name: 'FinalTouch FT1', cat: 'Финишная шпаклёвка', col: '#d5dbdb', byT: true, c: 1.2, bw: 25, mn: 0.5, mx: 2, tip: 'Финишная шпаклёвка под окраску и обои.' },
       { id: 'ft2', name: 'PolymerWhiteCoat FT2', cat: 'Полимерная шпаклёвка', col: '#f8f9fa', byT: true, c: 1.1, bw: 25, mn: 0.5, mx: 2, tip: 'Белоснежная полимерная шпаклёвка.' },
       { id: 'sc1', name: 'Skimcoat SC1', cat: 'Выравнивающая шпаклёвка', col: '#b2bec3', byT: true, c: 1.4, bw: 25, mn: 1, mx: 3, tip: 'Цементная шпаклёвка. Водостойкая.' },
-      { id: '3in1w', name: '3in1 Specialist', cat: 'Цементная штукатурка', col: '#2c3e50', byT: true, c: 1.6, bw: 25, mn: 5, mx: 30, tip: 'Универсальная цементная штукатурка для внутренних и наружных работ.' },
+      { id: '3in1w', name: '3 in 1 All Purpose', cat: 'Цементная штукатурка', col: '#2c3e50', byT: true, c: 1.6, bw: 25, mn: 5, mx: 30, tip: 'Универсальная цементная штукатурка для внутренних и наружных работ.' },
     ],
     tile: [
       { id: 'tt1', name: 'TileAdhesive TT1', cat: 'Усиленный клей C2', col: '#e67e22', bw: 25, c: { 6: 4.0, 8: 4.5, 10: 5.0 }, tip: 'Усиленный клей C2 для тяжёлой плитки.' },
-      { id: '3in1t', name: '3in1 Specialist', cat: 'Плиточный клей', col: '#2c3e50', bw: 25, c: { 6: 3.5, 8: 4.0, 10: 4.5 }, tip: 'Универсальный клей для кафеля и керамогранита.' },
+      { id: 'tt2', name: 'TileStandard TT2', cat: 'Стандартный клей', col: '#d35400', bw: 25, c: { 6: 3.5, 8: 4.0, 10: 4.5 }, tip: 'Стандартный клей для керамической плитки.' },
+      { id: '3in1t', name: '3 in 1 All Purpose', cat: 'Плиточный клей', col: '#2c3e50', bw: 25, c: { 6: 3.5, 8: 4.0, 10: 4.5 }, tip: 'Универсальный клей для кафеля и керамогранита.' },
     ],
     floor: [
       { id: 'pl1', name: 'PerfectLevel PL1', cat: 'Самовыравнивающийся пол', col: '#3498db', byT: true, c: 1.8, bw: 25, mn: 2, mx: 10, tip: 'Самовыравнивающийся пол. Растекается сам.' },
       { id: 'pl2', name: 'PerfectLevel PL2', cat: 'Финишный выравниватель', col: '#2980b9', byT: true, c: 1.8, bw: 20, mn: 5, mx: 20, tip: 'Гипсовый наливной пол. Финишный слой 5–20 мм.' },
       { id: 'pl3', name: 'FibroScreed PL3', cat: 'Армированная стяжка', col: '#1a6ba6', byT: true, c: 2.0, bw: 25, mn: 10, mx: 40, tip: 'Фибороармированная стяжка для высоких нагрузок.' },
-      { id: '3in1f', name: '3in1 Specialist', cat: 'Стяжка для пола', col: '#2c3e50', byT: true, c: 1.8, bw: 25, mn: 10, mx: 50, tip: 'Цементная стяжка для пола до 5 см.' },
+      { id: '3in1f', name: '3 in 1 All Purpose', cat: 'Стяжка для пола', col: '#2c3e50', byT: true, c: 1.8, bw: 25, mn: 10, mx: 50, tip: 'Цементная стяжка для пола до 5 см.' },
     ],
     ceiling: [
       { id: 'ft1c', name: 'FinalTouch FT1', cat: 'Финишная шпаклёвка', col: '#d5dbdb', byT: true, c: 1.2, bw: 25, mn: 0.5, mx: 3, tip: 'Финишная шпаклёвка на потолок.' },
       { id: 'ft2c', name: 'PolymerWhiteCoat FT2', cat: 'Полимерная шпаклёвка', col: '#f8f9fa', byT: true, c: 1.1, bw: 25, mn: 0.5, mx: 2, tip: 'Белоснежная полимерная шпаклёвка.' },
+      { id: 'sc1c', name: 'Skimcoat SC1', cat: 'Выравнивающая шпаклёвка', col: '#b2bec3', byT: true, c: 1.4, bw: 25, mn: 1, mx: 3, tip: 'Цементная шпаклёвка. Водостойкая.' },
+      { id: '2in1c', name: '2in1 Putty+Plaster', cat: 'Штукатурка + шпаклёвка', col: '#27ae60', byT: true, c: 1.3, bw: 25, mn: 1, mx: 15, tip: 'Универсальная смесь для потолков.' },
     ],
   };
 
@@ -1031,21 +1058,45 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('cOrderBtn').style.display = 'block';
   };
 
-  document.getElementById('cOrderForm').onsubmit = (e) => {
+  document.getElementById('cOrderForm').onsubmit = async (e) => {
     e.preventDefault();
     const name = document.getElementById('co-name').value;
     const phone = document.getElementById('co-phone').value;
+    const email = document.getElementById('co-email').value;
     const bags = document.getElementById('cr-bags').textContent;
     const prod = document.getElementById('cr-pname').textContent;
 
-    console.log('--- ЗАКАЗ ИЗ КАЛЬКУЛЯТОРА ---');
-    console.log('Товар:', prod);
-    console.log('Количество:', bags, 'мешков');
-    console.log('Имя:', name);
-    console.log('Телефон:', phone);
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Отправка...';
 
-    alert('Спасибо, ' + name + '! Ваша заявка на ' + bags + ' мешков ' + prod + ' отправлена.');
-    window.resetCalc();
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          phone,
+          email,
+          products: `${prod} (${bags} мешков)`,
+          source: 'Калькулятор'
+        }),
+      });
+
+      if (response.ok) {
+        showToast('Спасибо, ' + name + '! Ваша заявка принята.');
+        window.resetCalc();
+      } else {
+        throw new Error('Failed to send');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Ошибка при отправке.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+    }
   };
 
   window.resetCalc = () => {
