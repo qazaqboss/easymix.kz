@@ -507,7 +507,7 @@ h2 {
 
 .showcase-label {
   text-align: center;
-  margin-top: 24px;
+  margin-top: 16px;
 }
 
 .showcase-name {
@@ -528,7 +528,7 @@ h2 {
 .showcase-dots {
   display: flex;
   gap: 10px;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .dot {

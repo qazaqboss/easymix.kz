@@ -1,5 +1,6 @@
 .DS_Store
 .gemini/
+.claude/
 brain/
 node_modules/
 dist/
@@ -7,3 +8,7 @@ dist/
 website.code-workspace
 easymix_website_export.zip
 easymix_website_export/
+GEMINI.md
+consolidate.py
+server.py
+run_server.py

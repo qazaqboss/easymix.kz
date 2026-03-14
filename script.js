@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
       applications: ['Идеально гладкая поверхность', 'Тонкие финишные покрытия', 'Паркет, виниловые полы']
     },
     pl3: {
-      name: 'FibroScreed', code: 'PL3', category: 'Наливной пол',
+      name: 'FibroScreed', code: 'PL3', category: 'Стяжка',
       img: 'images/bag_pl3.png',
       video: '',
       description: 'Армированная полипропиленовым фиброволокном цементная стяжка. Для создания высокопрочных полов, выдерживающих значительные нагрузки.',
@@ -810,7 +810,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!name || !phone || !email) return;
 
-    const orderItems = cart.map(i => `${i.name} x${i.qty}`).join(', ');
+    const orderItems = cart.map(i => `${i.name} x${i.qty}`).join(', ') || 'Без товаров';
 
     // Highlight loading state
     const submitBtn = orderForm.querySelector('button[type="submit"]');
@@ -837,7 +837,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCartUI();
         orderForm.reset();
         closeCart();
-        showToast('Заявка успешно отправлена! Мы свяжемся с вами.');
+        showToast('✓ Заявка отправлена на ezmarketkz@gmail.com! Мы свяжемся с вами.');
       } else {
         throw new Error('Failed to send');
       }

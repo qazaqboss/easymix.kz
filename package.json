@@ -5,6 +5,9 @@
     "scripts": {
         "start": "serve ."
     },
+    "dependencies": {
+        "nodemailer": "^6.9.14"
+    },
     "devDependencies": {
         "serve": "^14.2.1"
     }
