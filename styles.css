@@ -191,6 +191,16 @@ h2 {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
 }
 
+.navbar.scrolled .cart-toggle {
+  color: var(--gray-900);
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+.navbar.scrolled .cart-toggle:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
 .nav-container {
   max-width: 1240px;
   margin: 0 auto;
