@@ -4,6 +4,10 @@
     {
       "source": "/calculator",
       "destination": "/calculator.html"
+    },
+    {
+      "source": "/cabinet",
+      "destination": "/cabinet.html"
     }
   ]
 }
