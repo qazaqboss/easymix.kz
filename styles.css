@@ -250,6 +250,17 @@ h2 {
   background: rgba(45, 138, 78, 0.08);
 }
 
+.nav-link--cabinet {
+  background: var(--green);
+  color: #fff !important;
+  font-weight: 600;
+}
+
+.nav-link--cabinet:hover {
+  background: #40c057;
+  color: #fff !important;
+}
+
 /* Navbar Social */
 .nav-social {
   display: flex;
