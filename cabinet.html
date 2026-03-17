@@ -925,6 +925,93 @@
 
     .sidebar-overlay.open { display: block; }
 
+    /* Progress tracker */
+    .progress-stage {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 0;
+    }
+
+    .stage-icon-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .stage-icon {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      flex-shrink: 0;
+      font-size: 1.2rem;
+    }
+
+    .stage-icon.pending {
+      background: var(--dark-3);
+      border: 2px solid var(--border);
+      opacity: 0.4;
+    }
+
+    .stage-icon.active {
+      background: var(--dark-3);
+      border: 2px solid var(--green);
+    }
+
+    .stage-icon.done {
+      background: var(--green-dim);
+      border: 2px solid var(--green);
+    }
+
+    .stage-spinner {
+      position: absolute;
+      top: -2px; left: -2px;
+      width: 48px; height: 48px;
+      animation: spin 2s linear infinite;
+    }
+
+    .stage-icon.done .stage-spinner,
+    .stage-icon.pending .stage-spinner { display: none; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .stage-line {
+      width: 2px;
+      flex: 1;
+      min-height: 28px;
+      background: var(--border);
+      margin: 4px 0;
+      transition: background 1s ease, height 1s ease;
+    }
+
+    .stage-info {
+      padding-bottom: 20px;
+      flex: 1;
+    }
+
+    .stage-label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--gray-300);
+      transition: color 0.3s;
+    }
+
+    .stage-desc {
+      font-size: 0.78rem;
+      color: var(--gray-500);
+      margin-top: 2px;
+    }
+
+    .stage-time {
+      font-size: 0.75rem;
+      color: var(--green);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
     /* New order buttons */
     .btn-new-order {
       width: 100%;
@@ -2336,23 +2423,145 @@
     document.getElementById('submitOrderBtn').disabled = items.length === 0;
   }
 
+  const ORDER_STAGES = [
+    { icon: '📋', label: 'Заявка получена', desc: 'Ваш заказ зарегистрирован в системе', delay: 0 },
+    { icon: '🔍', label: 'Проверка наличия', desc: 'Проверяем наличие товаров на складе', delay: 2500 },
+    { icon: '📦', label: 'Формирование заказа', desc: 'Менеджер собирает ваш заказ', delay: 5500 },
+    { icon: '✅', label: 'Передано менеджеру', desc: 'Менеджер свяжется с вами в течение 30 минут', delay: 8500 },
+  ];
+
   function submitOrder() {
     const btn = document.getElementById('submitOrderBtn');
     btn.disabled = true;
     btn.textContent = 'Отправка...';
 
-    setTimeout(() => {
-      document.getElementById('newOrderBody').innerHTML = `
-        <div class="order-success">
-          <div class="success-icon">
-            <svg width="28" height="28" fill="none" stroke="#2f9e44" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <div style="font-family:var(--font-heading);font-size:1.3rem;font-weight:700;margin-bottom:8px;">Заказ принят!</div>
-          <div style="color:var(--gray-300);font-size:0.9rem;margin-bottom:24px;">Менеджер свяжется с вами в течение 30 минут для подтверждения и согласования доставки.</div>
-          <button class="btn-submit-order" style="max-width:200px;margin:0 auto;" onclick="closeNewOrder()">Закрыть</button>
+    // Collect order data
+    let items = [];
+    let subtotal = 0, totalBags = 0;
+    document.querySelectorAll('.product-row').forEach(row => {
+      const sku = row.dataset.sku;
+      const price = parseInt(row.dataset.price);
+      const name = row.dataset.name;
+      const qty = parseInt(document.getElementById('qty-' + sku)?.value || 0);
+      if (qty > 0) {
+        const total = qty * price;
+        subtotal += total;
+        totalBags += qty;
+        items.push({ sku, name, qty, price, total });
+      }
+    });
+
+    const discountPct = getDiscount(totalBags);
+    const discountAmt = Math.round(subtotal * discountPct / 100);
+    const finalTotal = subtotal - discountAmt;
+    const note = document.getElementById('orderNote').value;
+    const orderNum = 'EM-' + Date.now().toString().slice(-6);
+
+    // Build email product list
+    const productsText = items.map(i =>
+      `${i.name} (${i.sku}) × ${i.qty} мешков = ${i.total.toLocaleString('ru')} ₸`
+    ).join('\n');
+
+    // Send email via API
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: 'Алибеков Алексей (ТОО СтройПрофи)',
+        phone: '+7 701 234 56 78',
+        email: 'demo@easymix.kz',
+        source: `Личный кабинет — Новый заказ ${orderNum}`,
+        products: productsText,
+        message: `Позиций: ${items.length} | Мешков: ${totalBags} | Сумма: ${subtotal.toLocaleString('ru')} ₸${discountPct ? ` | Скидка ${discountPct}%: -${discountAmt.toLocaleString('ru')} ₸` : ''} | Итого: ${finalTotal.toLocaleString('ru')} ₸${note ? '\n\nКомментарий: ' + note : ''}`,
+      })
+    }).catch(() => {}); // silent fail, progress still shows
+
+    // Show progress modal
+    document.getElementById('newOrderBody').innerHTML = `
+      <div style="padding:28px 32px;">
+        <div style="text-align:center;margin-bottom:28px;">
+          <div style="font-family:var(--font-heading);font-size:1.1rem;font-weight:700;">Заказ ${orderNum}</div>
+          <div style="color:var(--gray-300);font-size:0.83rem;margin-top:4px;">${new Date().toLocaleDateString('ru-KZ', {day:'numeric',month:'long',year:'numeric'})}</div>
         </div>
-      `;
-    }, 1200);
+
+        <div id="progressStages">
+          ${ORDER_STAGES.map((s, i) => `
+            <div class="progress-stage" id="stage-${i}">
+              <div class="stage-icon-wrap">
+                <div class="stage-icon pending" id="stage-icon-${i}">
+                  <span class="stage-emoji">${s.icon}</span>
+                  <svg class="stage-spinner" width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="none" stroke="var(--green)" stroke-width="2" stroke-dasharray="107" stroke-dashoffset="107" id="spinner-${i}"/></svg>
+                </div>
+                ${i < ORDER_STAGES.length - 1 ? '<div class="stage-line" id="stage-line-'+i+'"></div>' : ''}
+              </div>
+              <div class="stage-info">
+                <div class="stage-label" id="stage-label-${i}">${s.label}</div>
+                <div class="stage-desc" id="stage-desc-${i}">${s.desc}</div>
+                <div class="stage-time" id="stage-time-${i}"></div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+        <div id="orderSummaryBox" style="margin-top:24px;background:var(--dark-3);border:1px solid var(--border);border-radius:12px;padding:16px 20px;">
+          <div style="font-weight:600;font-size:0.88rem;margin-bottom:10px;">Состав заказа</div>
+          ${items.map(i => `
+            <div style="display:flex;justify-content:space-between;font-size:0.82rem;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+              <span style="color:var(--gray-300);"><span style="color:var(--green);font-weight:600;">${i.sku}</span> × ${i.qty} мешков</span>
+              <span style="font-weight:600;">${i.total.toLocaleString('ru')} ₸</span>
+            </div>
+          `).join('')}
+          ${discountPct ? `<div style="display:flex;justify-content:space-between;font-size:0.82rem;padding:6px 0;color:var(--green);"><span>Скидка ${discountPct}%</span><span>−${discountAmt.toLocaleString('ru')} ₸</span></div>` : ''}
+          <div style="display:flex;justify-content:space-between;font-size:1rem;font-weight:700;padding-top:8px;margin-top:4px;border-top:1px solid var(--border);">
+            <span>Итого</span><span style="color:var(--green);">${finalTotal.toLocaleString('ru')} ₸</span>
+          </div>
+        </div>
+
+        <button class="btn-submit-order" style="margin-top:20px;" onclick="closeNewOrder()">Закрыть</button>
+      </div>
+    `;
+
+    // Animate stages
+    ORDER_STAGES.forEach((s, i) => {
+      setTimeout(() => {
+        const icon = document.getElementById('stage-icon-' + i);
+        const label = document.getElementById('stage-label-' + i);
+        const time = document.getElementById('stage-time-' + i);
+        const spinner = document.getElementById('spinner-' + i);
+        const line = document.getElementById('stage-line-' + i);
+
+        if (!icon) return;
+
+        // Activate current
+        icon.className = 'stage-icon active';
+        label.style.color = 'var(--white)';
+        if (spinner) {
+          spinner.style.transition = 'stroke-dashoffset 2s linear';
+          spinner.style.strokeDashoffset = '0';
+        }
+
+        // Complete previous
+        if (i > 0) {
+          const prevIcon = document.getElementById('stage-icon-' + (i-1));
+          const prevLine = document.getElementById('stage-line-' + (i-1));
+          if (prevIcon) prevIcon.className = 'stage-icon done';
+          if (prevLine) { prevLine.style.background = 'var(--green)'; prevLine.style.height = '100%'; }
+          const prevTime = document.getElementById('stage-time-' + (i-1));
+          if (prevTime) prevTime.textContent = '✓ Готово';
+        }
+
+        time.textContent = 'Выполняется...';
+
+        // Complete last
+        if (i === ORDER_STAGES.length - 1) {
+          setTimeout(() => {
+            icon.className = 'stage-icon done';
+            time.textContent = '✓ Готово';
+            label.style.color = 'var(--green)';
+          }, 2500);
+        }
+      }, s.delay);
+    });
   }
 
   document.getElementById('newOrderModal').addEventListener('click', function(e) {
