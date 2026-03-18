@@ -1347,22 +1347,22 @@
     <h1 class="login-title">Личный кабинет</h1>
     <p class="login-subtitle">Войдите, чтобы управлять заказами и документами</p>
 
-    <div class="login-error" id="loginError">Неверный email или пароль</div>
+    <div id="loginError" class="login-error">Неверный логин или пароль</div>
 
     <div class="form-group">
-      <label class="form-label">Email или телефон</label>
-      <input type="text" class="form-input" id="loginEmail" placeholder="example@gmail.com" value="demo@easymix.kz">
+      <label class="form-label">Логин</label>
+      <input type="text" class="form-input" id="loginEmail" placeholder="Ваше имя (Ербол, Алена...)" autocomplete="off">
     </div>
 
     <div class="form-group">
       <label class="form-label">Пароль</label>
-      <input type="password" class="form-input" id="loginPass" placeholder="••••••••" value="demo123">
+      <input type="password" class="form-input" id="loginPass" placeholder="••••••••">
     </div>
 
     <button class="btn-login" onclick="doLogin()">Войти</button>
 
     <p class="login-demo">
-      Для демо нажмите войти или <span onclick="doLogin()">войти как гость</span>
+      Аккаунты: <span onclick="fillLogin('ербол','erbол123')">Ербол</span> · <span onclick="fillLogin('алена','alena123')">Алена</span> · <span onclick="fillLogin('александр','alex123')">Александр</span> · <span onclick="fillLogin('жаслан','zhaslan123')">Жаслан</span>
     </p>
   </div>
 </div>
@@ -1381,9 +1381,9 @@
     </a>
 
     <div class="sidebar-user">
-      <div class="user-avatar" id="userAvatar">АА</div>
-      <div class="user-name" id="userName">Алексей Алибеков</div>
-      <div class="user-type">Оптовый клиент</div>
+      <div class="user-avatar" id="userAvatar">?</div>
+      <div class="user-name" id="userName">—</div>
+      <div class="user-type" id="userType">Клиент EasyMix</div>
     </div>
 
     <nav class="sidebar-nav">
@@ -1454,7 +1454,7 @@
     <div class="page active" id="page-dashboard">
       <div class="page-header">
         <div>
-          <h1 class="page-title">Добро пожаловать, Алексей 👋</h1>
+          <h1 class="page-title" id="dashWelcome">Добро пожаловать 👋</h1>
           <p class="page-subtitle">Последнее обновление: сегодня, 10:42</p>
         </div>
       </div>
@@ -1463,23 +1463,23 @@
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-label">Всего заказов</div>
-          <div class="stat-value">12</div>
-          <div class="stat-change">+2 за этот месяц</div>
+          <div class="stat-value" id="statTotal">0</div>
+          <div class="stat-change" id="statTotalSub">Заказов нет</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Активные</div>
-          <div class="stat-value green">3</div>
+          <div class="stat-value green" id="statActive">0</div>
           <div class="stat-change">В обработке</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Потрачено</div>
-          <div class="stat-value">8.4M ₸</div>
+          <div class="stat-value" id="statSpent">0 ₸</div>
           <div class="stat-change">За всё время</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Мешков куплено</div>
-          <div class="stat-value">2 840</div>
-          <div class="stat-change">~237 тонн</div>
+          <div class="stat-value" id="statBags">0</div>
+          <div class="stat-change" id="statBagsSub">—</div>
         </div>
       </div>
 
@@ -1682,51 +1682,35 @@
       </div>
 
       <div class="card">
-        <div class="card-title">
-          <svg width="18" height="18" fill="none" stroke="#2f9e44" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          Личные данные
+        <div class="card-title" style="justify-content:space-between;">
+          <span style="display:flex;align-items:center;gap:8px;">
+            <svg width="18" height="18" fill="none" stroke="#2f9e44" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Личные данные
+          </span>
+          <button onclick="toggleProfileEdit()" id="editProfileBtn" style="background:var(--dark-3);border:1px solid var(--border);color:var(--gray-300);border-radius:8px;padding:6px 14px;font-size:0.82rem;cursor:pointer;">Редактировать</button>
         </div>
-        <div class="profile-grid">
-          <div class="profile-field">
-            <div class="profile-label">ФИО</div>
-            <div class="profile-value">Алибеков Алексей Иванович</div>
-          </div>
-          <div class="profile-field">
-            <div class="profile-label">Телефон</div>
-            <div class="profile-value">+7 701 234 56 78</div>
-          </div>
-          <div class="profile-field">
-            <div class="profile-label">Email</div>
-            <div class="profile-value">demo@easymix.kz</div>
-          </div>
-          <div class="profile-field">
-            <div class="profile-label">Тип клиента</div>
-            <div class="profile-value" style="color:var(--green)">Оптовый клиент</div>
-          </div>
+        <div id="profileViewMode" class="profile-grid">
+          <div class="profile-field"><div class="profile-label">ФИО</div><div class="profile-value" id="pv-fullname">—</div></div>
+          <div class="profile-field"><div class="profile-label">Телефон</div><div class="profile-value" id="pv-phone">—</div></div>
+          <div class="profile-field"><div class="profile-label">Email</div><div class="profile-value" id="pv-email">—</div></div>
+          <div class="profile-field"><div class="profile-label">Тип клиента</div><div class="profile-value" id="pv-type" style="color:var(--green)">Клиент</div></div>
+          <div class="profile-field"><div class="profile-label">Компания</div><div class="profile-value" id="pv-company">—</div></div>
+          <div class="profile-field"><div class="profile-label">БИН</div><div class="profile-value" id="pv-bin">—</div></div>
+          <div class="profile-field"><div class="profile-label">Город</div><div class="profile-value" id="pv-city">—</div></div>
+          <div class="profile-field"><div class="profile-label">Адрес доставки</div><div class="profile-value" id="pv-address">—</div></div>
         </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">
-          <svg width="18" height="18" fill="none" stroke="#2f9e44" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          Данные компании
-        </div>
-        <div class="profile-grid">
-          <div class="profile-field">
-            <div class="profile-label">Название компании</div>
-            <div class="profile-value">ТОО «СтройПрофи»</div>
-          </div>
-          <div class="profile-field">
-            <div class="profile-label">БИН</div>
-            <div class="profile-value">210540012345</div>
-          </div>
-          <div class="profile-field">
-            <div class="profile-label">Город</div>
-            <div class="profile-value">Актобе</div>
-          </div>
-          <div class="profile-field">
-            <div class="profile-label">Адрес доставки</div>
-            <div class="profile-value">ул. Победы, 14, офис 201</div>
+        <div id="profileEditMode" class="profile-grid" style="display:none;">
+          <div class="profile-field"><label class="profile-label">ФИО</label><input class="form-input" id="pe-fullname" placeholder="Полное имя"></div>
+          <div class="profile-field"><label class="profile-label">Телефон</label><input class="form-input" id="pe-phone" placeholder="+7 700 000 00 00"></div>
+          <div class="profile-field"><label class="profile-label">Email</label><input class="form-input" id="pe-email" placeholder="email@example.com"></div>
+          <div class="profile-field"><label class="profile-label">Тип клиента</label><input class="form-input" id="pe-type" placeholder="Оптовый клиент"></div>
+          <div class="profile-field"><label class="profile-label">Компания</label><input class="form-input" id="pe-company" placeholder="ТОО / ИП / Физ. лицо"></div>
+          <div class="profile-field"><label class="profile-label">БИН</label><input class="form-input" id="pe-bin" placeholder="000000000000"></div>
+          <div class="profile-field"><label class="profile-label">Город</label><input class="form-input" id="pe-city" placeholder="Актобе"></div>
+          <div class="profile-field"><label class="profile-label">Адрес доставки</label><input class="form-input" id="pe-address" placeholder="Улица, дом, офис"></div>
+          <div style="grid-column:1/-1;display:flex;gap:10px;margin-top:4px;">
+            <button onclick="saveProfile()" style="background:var(--green);border:none;color:#fff;border-radius:8px;padding:10px 24px;font-weight:600;cursor:pointer;">Сохранить</button>
+            <button onclick="cancelProfileEdit()" style="background:var(--dark-3);border:1px solid var(--border);color:var(--gray-300);border-radius:8px;padding:10px 24px;cursor:pointer;">Отмена</button>
           </div>
         </div>
       </div>
@@ -1990,8 +1974,25 @@
 </div>
 
 <script>
-  // ========== DATA ==========
-  const ORDERS = [
+  // ========== USERS ==========
+  const USERS = {
+    'ербол':     { login: 'ербол',     password: 'erbол123',    name: 'Ербол',     fullname: '', phone: '', email: '', type: 'Клиент', company: '', bin: '', city: '', address: '' },
+    'алена':     { login: 'алена',     password: 'alena123',    name: 'Алена',     fullname: '', phone: '', email: '', type: 'Клиент', company: '', bin: '', city: '', address: '' },
+    'александр': { login: 'александр', password: 'alex123',     name: 'Александр', fullname: '', phone: '', email: '', type: 'Клиент', company: '', bin: '', city: '', address: '' },
+    'жаслан':    { login: 'жаслан',    password: 'zhaslan123',  name: 'Жаслан',    fullname: '', phone: '', email: '', type: 'Клиент', company: '', bin: '', city: '', address: '' },
+  };
+
+  let currentUser = null;
+  let ORDERS = [];
+
+  // Load user profile from localStorage (saved edits)
+  function loadUserProfile(login) {
+    const saved = localStorage.getItem('profile_' + login);
+    if (saved) Object.assign(USERS[login], JSON.parse(saved));
+  }
+
+  // ========== DEMO DATA (for reference only — not used by default) ==========
+  const DEMO_ORDERS = [
     {
       id: 1, orderNumber: 'EM-2024-047', status: 'production',
       orderDate: '2024-03-10', totalAmount: 1240000,
@@ -2080,15 +2081,115 @@
   ];
 
   // ========== LOGIN ==========
+  function fillLogin(login, pass) {
+    document.getElementById('loginEmail').value = login;
+    document.getElementById('loginPass').value = pass;
+  }
+
   function doLogin() {
+    const loginInput = document.getElementById('loginEmail').value.trim().toLowerCase();
+    const passInput = document.getElementById('loginPass').value.trim();
+    const errEl = document.getElementById('loginError');
+
+    const user = USERS[loginInput];
+    if (!user || user.password !== passInput) {
+      errEl.style.display = 'block';
+      return;
+    }
+    errEl.style.display = 'none';
+
+    // Load saved profile
+    loadUserProfile(loginInput);
+    currentUser = USERS[loginInput];
+
+    // Load user's orders from localStorage
+    const saved = localStorage.getItem('orders_' + currentUser.login);
+    ORDERS = saved ? JSON.parse(saved) : [];
+
     document.getElementById('loginPage').style.display = 'none';
     document.getElementById('cabinet').classList.add('active');
+    updateUserDisplay();
     renderAll();
   }
 
   function doLogout() {
+    currentUser = null;
+    ORDERS = [];
     document.getElementById('cabinet').classList.remove('active');
     document.getElementById('loginPage').style.display = 'flex';
+    document.getElementById('loginEmail').value = '';
+    document.getElementById('loginPass').value = '';
+  }
+
+  function updateUserDisplay() {
+    if (!currentUser) return;
+    const initials = currentUser.name.slice(0, 2).toUpperCase();
+    document.getElementById('userAvatar').textContent = initials;
+    document.getElementById('userName').textContent = currentUser.fullname || currentUser.name;
+    document.getElementById('userType').textContent = currentUser.type || 'Клиент EasyMix';
+    document.getElementById('dashWelcome').textContent = `Добро пожаловать, ${currentUser.name} 👋`;
+    renderProfileView();
+  }
+
+  // ========== PROFILE ==========
+  function renderProfileView() {
+    if (!currentUser) return;
+    document.getElementById('pv-fullname').textContent = currentUser.fullname || '—';
+    document.getElementById('pv-phone').textContent = currentUser.phone || '—';
+    document.getElementById('pv-email').textContent = currentUser.email || '—';
+    document.getElementById('pv-type').textContent = currentUser.type || 'Клиент';
+    document.getElementById('pv-company').textContent = currentUser.company || '—';
+    document.getElementById('pv-bin').textContent = currentUser.bin || '—';
+    document.getElementById('pv-city').textContent = currentUser.city || '—';
+    document.getElementById('pv-address').textContent = currentUser.address || '—';
+  }
+
+  function toggleProfileEdit() {
+    const view = document.getElementById('profileViewMode');
+    const edit = document.getElementById('profileEditMode');
+    if (edit.style.display === 'none') {
+      // Fill edit fields
+      document.getElementById('pe-fullname').value = currentUser.fullname || '';
+      document.getElementById('pe-phone').value = currentUser.phone || '';
+      document.getElementById('pe-email').value = currentUser.email || '';
+      document.getElementById('pe-type').value = currentUser.type || '';
+      document.getElementById('pe-company').value = currentUser.company || '';
+      document.getElementById('pe-bin').value = currentUser.bin || '';
+      document.getElementById('pe-city').value = currentUser.city || '';
+      document.getElementById('pe-address').value = currentUser.address || '';
+      view.style.display = 'none';
+      edit.style.display = 'grid';
+      document.getElementById('editProfileBtn').textContent = 'Отмена';
+    } else {
+      cancelProfileEdit();
+    }
+  }
+
+  function cancelProfileEdit() {
+    document.getElementById('profileViewMode').style.display = 'grid';
+    document.getElementById('profileEditMode').style.display = 'none';
+    document.getElementById('editProfileBtn').textContent = 'Редактировать';
+  }
+
+  function saveProfile() {
+    currentUser.fullname = document.getElementById('pe-fullname').value.trim();
+    currentUser.phone    = document.getElementById('pe-phone').value.trim();
+    currentUser.email    = document.getElementById('pe-email').value.trim();
+    currentUser.type     = document.getElementById('pe-type').value.trim();
+    currentUser.company  = document.getElementById('pe-company').value.trim();
+    currentUser.bin      = document.getElementById('pe-bin').value.trim();
+    currentUser.city     = document.getElementById('pe-city').value.trim();
+    currentUser.address  = document.getElementById('pe-address').value.trim();
+
+    // Persist
+    localStorage.setItem('profile_' + currentUser.login, JSON.stringify({
+      fullname: currentUser.fullname, phone: currentUser.phone, email: currentUser.email,
+      type: currentUser.type, company: currentUser.company, bin: currentUser.bin,
+      city: currentUser.city, address: currentUser.address
+    }));
+
+    cancelProfileEdit();
+    updateUserDisplay();
   }
 
   // ========== NAVIGATION ==========
@@ -2116,13 +2217,32 @@
 
   // ========== RENDER ==========
   function renderAll() {
+    renderStats();
     renderRecentOrders();
     renderOrders();
     renderDocs();
   }
 
+  function renderStats() {
+    const total = ORDERS.length;
+    const active = ORDERS.filter(o => ['confirmed','production','ready','shipped'].includes(o.status)).length;
+    const spent = ORDERS.reduce((s, o) => s + (o.totalAmount || 0), 0);
+    const bags = ORDERS.reduce((s, o) => s + (o.items || []).reduce((b, i) => b + (i.quantity || 0), 0), 0);
+
+    document.getElementById('statTotal').textContent = total;
+    document.getElementById('statTotalSub').textContent = total ? `Всего за всё время` : 'Заказов нет';
+    document.getElementById('statActive').textContent = active;
+    document.getElementById('statSpent').textContent = spent >= 1000000 ? (spent / 1000000).toFixed(1) + 'M ₸' : formatMoney(spent);
+    document.getElementById('statBags').textContent = bags.toLocaleString('ru');
+    document.getElementById('statBagsSub').textContent = bags ? `~${Math.round(bags * 25 / 1000)} тонн` : '—';
+  }
+
   function renderRecentOrders() {
     const el = document.getElementById('recentOrders');
+    if (!ORDERS.length) {
+      el.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">Заказов пока нет</div><div class="empty-text">Создайте первый заказ, нажав кнопку ниже</div></div>`;
+      return;
+    }
     el.innerHTML = ORDERS.slice(0, 3).map(o => `
       <div class="recent-order-row">
         <div>
@@ -2348,7 +2468,7 @@
 
   function closeNewOrder() {
     document.getElementById('newOrderModal').classList.remove('open');
-    document.getElementById('newOrderBody').innerHTML = document.getElementById('newOrderBody').innerHTML;
+    renderAll(); // refresh stats and orders list
   }
 
   function changeQty(sku, delta) {
@@ -2462,14 +2582,35 @@
       `${i.name} (${i.sku}) × ${i.qty} мешков = ${i.total.toLocaleString('ru')} ₸`
     ).join('\n');
 
+    // Save order to user's data
+    const newOrder = {
+      id: Date.now(),
+      orderNumber: orderNum,
+      status: 'confirmed',
+      orderDate: new Date().toISOString().slice(0, 10),
+      totalAmount: finalTotal,
+      deliveryAddress: currentUser?.address || '',
+      items: items.map(i => ({
+        productName: i.name + ' — ' + i.sku,
+        quantity: i.qty, unit: 'мешков', unitPrice: i.price, totalPrice: i.total
+      })),
+      shipments: [],
+      documents: []
+    };
+    ORDERS.unshift(newOrder);
+    localStorage.setItem('orders_' + currentUser.login, JSON.stringify(ORDERS));
+
     // Send email via API
+    const userName = currentUser?.fullname || currentUser?.name || 'Клиент';
+    const userPhone = currentUser?.phone || '—';
+    const userEmail = currentUser?.email || '—';
     fetch('/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name: 'Алибеков Алексей (ТОО СтройПрофи)',
-        phone: '+7 701 234 56 78',
-        email: 'demo@easymix.kz',
+        name: `${userName}${currentUser?.company ? ' (' + currentUser.company + ')' : ''}`,
+        phone: userPhone,
+        email: userEmail,
         source: `Личный кабинет — Новый заказ ${orderNum}`,
         products: productsText,
         message: `Позиций: ${items.length} | Мешков: ${totalBags} | Сумма: ${subtotal.toLocaleString('ru')} ₸${discountPct ? ` | Скидка ${discountPct}%: -${discountAmt.toLocaleString('ru')} ₸` : ''} | Итого: ${finalTotal.toLocaleString('ru')} ₸${note ? '\n\nКомментарий: ' + note : ''}`,
